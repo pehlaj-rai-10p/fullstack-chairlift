@@ -1,0 +1,11 @@
+version: '3'
+services:
+  chairlift:
+    build: 
+      context: .
+      #dockerfile: Dockerfile
+    command: node app/src/index.js
+    ports:
+    - 4001:4001
+    volumes:
+    - .:/app
