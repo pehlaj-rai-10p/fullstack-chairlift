@@ -1,4 +1,7 @@
 //index.js
+
+//import "reflect-metadata";
+
 const Koa = require('koa');
 const app = new Koa();
  
