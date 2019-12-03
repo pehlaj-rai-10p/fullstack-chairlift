@@ -2,9 +2,9 @@
   "name": "chairlift",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
-  "main": "index.js",
+  "main": "/src/index.js",
   "scripts": {
+    "start": "nodemon --exec babel-node src/index.js",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,6 +21,7 @@
   "homepage": "https://github.com/pehlaj-rai-10p/fullstack-chairlift#readme",
   "dependencies": {
     "@types/node": "^12.12.14",
+    "dotenv": "^8.2.0",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
@@ -29,5 +30,13 @@
     "ts-node": "^8.5.4",
     "typeorm": "^0.2.20",
     "typescript": "^3.7.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.7.4",
+    "@babel/node": "^7.7.4",
+    "@babel/preset-env": "^7.7.4",
+    "@types/koa": "^2.11.0",
+    "@types/koa-bodyparser": "^4.3.0",
+    "nodemon": "^2.0.1"
   }
 }
