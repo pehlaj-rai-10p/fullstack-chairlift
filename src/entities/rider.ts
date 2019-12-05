@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column } from 'typeorm';
 
-@Entity('riders')
+@Entity('rider')
 export class Rider {
   @PrimaryGeneratedColumn()
   public id: number;
@@ -55,6 +55,7 @@ export class Rider {
   public credits: number;
 
   @Column({
+    name: 'freeRides',
     type: 'integer',
     default: 5
   })
