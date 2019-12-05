@@ -1,0 +1,110 @@
+{
+  "name": "chairlift",
+  "version": "0.0.1",
+  "private": true,
+  "description": "A simple koa2 ts quickstarter",
+  "main": "bin/server",
+  "scripts": {
+    "start": "node bin/server",
+    "start:docker": "docker-compose up -d",
+    "stop:docker": "docker-compose down",
+    "build:docker": "docker-compose build",
+    "exec:docker": "docker exec -it chairlift sh",
+    "logs": "docker logs -f chairlift",
+    "logs:short": "sudo docker logs -f chairlift | bunyan -o short",
+    "logs:simple": "sudo docker logs -f chairlift | bunyan -o simple",
+    "api:exec": "sudo docker exec -it chairlift sh",
+    "lint": "tslint -c tslint.json 'src/**/*.ts' ",
+    "lint:fix": "tslint -c tslint.json 'src/**/*.ts' --fix",
+    "format:check": "prettier --config ./.prettierrc --list-different \"src/**/*{.ts,.js,.json}\"",
+    "format:fix:all": "pretty-quick",
+    "format:fix:staged": "pretty-quick --staged",
+    "test": "jest --colors -w 1",
+    "test:coverage": "jest --colors --coverage",
+    "migrate:create": "./node_modules/.bin/typeorm migration:create -n",
+    "migrate:revert": "ts-node ./node_modules/.bin/typeorm migration:revert",
+    "migrate:run": "ts-node ./node_modules/.bin/typeorm migration:run"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pehlaj-rai-10p/fullstack-chairlift.git"
+  },
+  "keywords": [
+    "email"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "boom": "7.3.0",
+    "bunyan": "^1.8.12",
+    "convict": "5.0.0",
+    "joi": "14.3.1",
+    "koa": "2.7.0",
+    "koa-bodyparser": "4.2.1",
+    "koa-bunyan-logger": "^2.1.0",
+    "koa-helmet": "4.1.0",
+    "koa-json": "2.0.2",
+    "koa-mount": "4.0.0",
+    "koa-router": "7.4.0",
+    "koa-static-server": "1.4.0",
+    "koa2-cors": "2.0.6",
+    "node-cache": "4.2.0",
+    "pg": "^7.11.0",
+    "request": "2.88.0",
+    "request-promise-native": "1.0.7",
+    "typeorm": "0.3.0-alpha.23"
+  },
+  "devDependencies": {
+    "@types/boom": "7.2.1",
+    "@types/bunyan": "^1.8.6",
+    "@types/convict": "4.2.1",
+    "@types/jest": "^24.0.13",
+    "@types/joi": "14.3.3",
+    "@types/koa": "2.0.48",
+    "@types/koa-bodyparser": "4.2.2",
+    "@types/koa-bunyan-logger": "^2.1.1",
+    "@types/koa-helmet": "3.1.2",
+    "@types/koa-json": "2.0.18",
+    "@types/koa-mount": "3.0.1",
+    "@types/koa-router": "7.0.40",
+    "@types/koa-static-server": "1.3.0",
+    "@types/koa2-cors": "2.0.1",
+    "@types/node-cache": "4.1.3",
+    "@types/request": "2.48.1",
+    "@types/request-promise-native": "1.0.16",
+    "jest": "^24.8.0",
+    "nodemon": "1.19.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.17.1",
+    "pretty-quick": "^1.10.0",
+    "ts-jest": "^24.0.2",
+    "ts-node": "8.1.0",
+    "tslint": "^5.16.0",
+    "typescript": "3.4.5"
+  },
+  "jest": {
+    "verbose": true,
+    "notify": true,
+    "notifyMode": "always",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "ts-jest"
+    },
+    "testRegex": "/tests/.*\\.(ts|tsx|js)$",
+    "collectCoverageFrom": [
+      "src/services/*.ts",
+      "src/validations/*.ts",
+      "src/classes/*.ts"
+    ],
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "html"
+    ]
+  }
+}
