@@ -28,7 +28,7 @@ services:
 
   postgres:
     image: mdillon/postgis:10-alpine
-    container_name: koa2-typeorm-db
+    container_name: charilift-db
     networks:
       - nodejs101
     environment:
