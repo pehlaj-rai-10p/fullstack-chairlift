@@ -2,7 +2,7 @@
   "name": "chairlift",
   "version": "0.0.1",
   "private": true,
-  "description": "A simple koa2 ts quickstarter",
+  "description": "ChairLift App",
   "main": "bin/server",
   "scripts": {
     "start": "node bin/server",
