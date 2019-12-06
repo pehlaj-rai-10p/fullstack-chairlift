@@ -9,21 +9,21 @@ export const getAll = async () => {
 };
 
 export const getById = async (id: number) => {
-    const hero = await riderRepo.getById(id);
-    if (!hero) {
+    const result = await riderRepo.getById(id);
+    if (!result) {
         boom.badRequest('Invalid id');
     }
-    return hero;
+    return result;
 };
 
 export const registerRider = async (payload: IRiderRequest) => {
     await joi.validate(payload, {
         name: joi.string().required()
     });
-    const hero = new Rider();
+    const rider = new Rider();
     //TODO populate fields here
-    const savedRider = await riderRepo.insert(hero);
-    return savedRider[0];
+    const result = await riderRepo.insert(rider);
+    return result[0];
 };
 
 export const updateRider = async (id: number, payload: IRiderProfileRequest) => {
@@ -32,18 +32,18 @@ export const updateRider = async (id: number, payload: IRiderProfileRequest) => 
         name: joi.string().required()
     });
     await getById(id);
-    const savedHero = await riderRepo.update(id, payload);
-    return savedHero[0];
+    const result = await riderRepo.update(id, payload);
+    return result[0];
 };
 
 export const softDelete = async (id: number) => {
-    const hero = await getById(id);
+    const result = await getById(id);
     await riderRepo.update(id, { isDeleted: true });
     return { success: true };
 };
 
 export const hardDelete = async (id: number) => {
-    const hero = await getById(id);
+    const result = await getById(id);
     await riderRepo.hardDelete(id);
     return { success: true };
 };
