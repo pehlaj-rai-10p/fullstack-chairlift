@@ -67,7 +67,7 @@ export class AddTableBus1575625449968 implements MigrationInterface {
                     },
                     {
                         name: 'route',
-                        type: 'character varying',
+                        type: 'json',
                         isNullable: false,
                         length: '100',
                     },

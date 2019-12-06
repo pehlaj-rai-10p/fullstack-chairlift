@@ -42,9 +42,9 @@ export class Rider {
   public emailAddress: string;
 
   @Column({
-    type: 'character varying',
-    length: '100',
-    default: 'idle'
+    type: 'enum',
+    enum: ["Idle", "RideBooked", "InRide"],
+    default: "Idle"
   })
   public status: string;
 

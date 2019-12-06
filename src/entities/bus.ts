@@ -48,16 +48,13 @@ export class Bus {
   })
   public currentLocation: string;
 
-  @Column({
-    type: 'character varying',
-    length: '100'
-  })
-  public route: string;
+  @Column("simple-json")
+  public route: { lat: number, lng: number };
 
   @Column({
-    type: 'character varying',
-    length: '100',
-    default: 'idle'
+    type: 'enum',
+    enum: ["Idle", "Booking", "OnRoute"],
+    default: "Idle"
   })
   public status: string;
 
