@@ -42,6 +42,7 @@ export class Bus {
   public driverName: string;
 
   @Column({
+    name: 'location',
     type: 'character varying',
     length: '100'
   })
@@ -68,7 +69,7 @@ export class Bus {
 
   @Column({
     type: 'integer',
-    default: 5
+    default: 0
   })
   public availableSeats: number;
 
