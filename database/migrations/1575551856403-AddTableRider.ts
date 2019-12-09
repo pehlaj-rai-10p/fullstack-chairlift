@@ -53,6 +53,11 @@ export class AddTableRider1575551856403 implements MigrationInterface {
                         length: '100',
                     },
                     {
+                        name: 'profilePicUrl',
+                        type: 'character varying',
+                        isNullable: true,
+                    },
+                    {
                         name: 'status',
                         type: 'character varying',
                         isNullable: false,

@@ -42,6 +42,11 @@ export class Rider {
   public emailAddress: string;
 
   @Column({
+    type: 'character varying',
+  })
+  public profilePicUrl: string;
+
+  @Column({
     type: 'enum',
     enum: ["Idle", "RideBooked", "InRide"],
     default: "Idle"
