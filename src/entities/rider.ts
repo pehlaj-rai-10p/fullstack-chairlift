@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('rider')
 export class Rider {
@@ -41,16 +41,10 @@ export class Rider {
   })
   public emailAddress: string;
 
-  @Column({
-    type: 'character varying',
-  })
+  @Column()
   public profilePicUrl: string;
 
-  @Column({
-    type: 'enum',
-    enum: ["Idle", "RideBooked", "InRide"],
-    default: "Idle"
-  })
+  @Column()
   public status: string;
 
   @Column({

@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity('bus')
 export class Bus {
@@ -51,11 +51,7 @@ export class Bus {
   @Column("simple-json")
   public route: { lat: number, lng: number };
 
-  @Column({
-    type: 'enum',
-    enum: ["Idle", "Booking", "OnRoute"],
-    default: "Idle"
-  })
+  @Column()
   public status: string;
 
   @Column({
