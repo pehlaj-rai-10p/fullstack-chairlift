@@ -11,11 +11,11 @@ router.get('/', ctrl.getAll);
 
 router.get('/:id', ctrl.getById);
 
-router.post('/', ctrl.registerRider);
+router.post('/', ctrl.registerBus);
 
-router.put('/:id', ctrl.updateRiderProfile);
+router.put('/:id', ctrl.updateBusDetails);
 
-router.delete('/:id', ctrl.deleteRider);
+router.delete('/:id', ctrl.deleteBus);
 
 const routes = router.routes();
 export default compose([routes]);
