@@ -1,5 +1,11 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
+enum BusStatus {
+  Idle = 'Idle',
+  Booking = 'Booking',
+  OnRoute = 'OnRoute'
+}
+
 @Entity('bus')
 export class Bus {
   @PrimaryGeneratedColumn()
@@ -16,7 +22,7 @@ export class Bus {
     length: '100'
   })
   public make: string;
-  
+
   @Column({
     type: 'character varying',
     length: '100'
@@ -51,8 +57,8 @@ export class Bus {
   @Column("simple-json")
   public route: { lat: number, lng: number };
 
-  @Column()
-  public status: string;
+  @Column('text')
+  public status: BusStatus;
 
   @Column({
     type: 'integer',

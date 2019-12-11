@@ -16,7 +16,7 @@ export class Rider {
     length: '100'
   })
   public passwordHash: string;
-  
+
   @Column({
     type: 'character varying',
     length: '100'
@@ -41,10 +41,16 @@ export class Rider {
   })
   public emailAddress: string;
 
-  @Column()
+  @Column({
+    type: 'character varying',
+    length: '255'
+  })
   public profilePicUrl: string;
 
-  @Column()
+  @Column({
+    type: 'character varying',
+    length: '100'
+  })
   public status: string;
 
   @Column({
