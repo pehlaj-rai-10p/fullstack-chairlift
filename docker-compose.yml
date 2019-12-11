@@ -4,7 +4,7 @@ services:
   app:
     container_name: chairlift
     networks:
-      - nodejs101
+      - chairlift
     build:
       context: .
       dockerfile: Dockerfile
@@ -30,9 +30,9 @@ services:
     image: mdillon/postgis:10-alpine
     container_name: charilift-db
     networks:
-      - nodejs101
+      - chairlift
     environment:
-      POSTGRES_DB: nodejs101
+      POSTGRES_DB: chairlift
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
@@ -44,5 +44,5 @@ volumes:
   postgres: ~
 
 networks:
-  nodejs101:
+  chairlift:
     name: chairlift
