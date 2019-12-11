@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column, OneToOne } from 'typeorm';
 import { Bus } from './bus';
 import { Rider } from './rider';
+import { ILocation } from '../interfaces/location';
 
 @Entity('bus')
 export class Booking {

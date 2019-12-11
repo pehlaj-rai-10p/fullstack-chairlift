@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { ILocation } from '../interfaces/location';
 
 enum BusStatus {
   Idle = 'Idle',
