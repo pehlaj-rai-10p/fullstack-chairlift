@@ -27,23 +27,26 @@ export class Booking {
   })
   public trackingNumber: string;
 
-  @Column("simple-json")
-  public pickupLocation: { lat: number, lng: number };
+  @Column("jsonb")
+  public pickupLocation: ILocation;
 
-  @Column("simple-json")
-  public dropOffLocation: { lat: number, lng: number };
+  @Column("jsonb")
+  public dropOffLocation: ILocation;
 
-  @Column()
-  public bookingTimeStamp: Date;
+  @Column('timestamptz')
+  public bookingTime: Date;
 
-  @Column()
-  public arrivalTimeStamp: Date;
+  @Column('timestamptz')
+  public estimatedDropOffTime: Date;
 
-  @Column()
-  public pickupTimeStamp: Date;
+  @Column('timestamptz')
+  public arrivalTime: Date;
 
-  @Column()
-  public dropOffTimeStamp: Date;
+  @Column('timestamptz')
+  public pickupTime: Date;
+
+  @Column('timestamptz')
+  public dropOffTime: Date;
 
   @Column()
   public status: string;

@@ -54,8 +54,8 @@ export class Bus {
   })
   public currentLocation: string;
 
-  @Column("simple-json")
-  public route: { lat: number, lng: number };
+  @Column("jsonb")
+  public route: ILocation[];
 
   @Column('text')
   public status: BusStatus;
