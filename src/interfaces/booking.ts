@@ -3,6 +3,8 @@ export interface IBookingRequest {
     busId: number;
     bookingTime: Date;
     pickupTime: Date;
+    dropOffTime: Date;
+    arrivalTime: Date;
     estimatedDropOffTime: Date;
     pickupLocation: JSON,
     dropOffLocation: JSON,

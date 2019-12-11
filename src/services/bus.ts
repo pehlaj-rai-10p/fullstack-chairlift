@@ -26,16 +26,6 @@ export const registerBus = async (payload: IBusRequest) => {
     return result[0];
 };
 
-export const updateBusDetails = async (id: number, payload: IBusUpdateRequest) => {
-    await joi.validate({ ...payload, id }, {
-        id: joi.number().required(),
-        name: joi.string().required()
-    });
-    await getById(id);
-    const result = await repo.update(id, payload);
-    return result[0];
-};
-
 export const softDelete = async (id: number) => {
     const result = await getById(id);
     await repo.update(id, { isDeleted: true });

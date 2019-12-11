@@ -13,8 +13,8 @@ export const insert = async (booking: Booking) => {
     return getRepository(Booking).insert(booking);
 }
 
-export const update = async (id: number, bookings: Partial<Booking>) => {
-    return getRepository(Booking).update({ id }, bookings);
+export const update = async (id: number, booking: Partial<Booking>) => {
+    return getRepository(Booking).update({ id }, booking);
 }
 
 export const hardDelete = async (id: number) => {
