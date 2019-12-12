@@ -1,7 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
-import { ILocation } from '../interfaces/location';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Booking } from './booking';
-import booking from '../routes/booking';
+import { Location } from './location';
 
 enum BusStatus {
   Idle = 'Idle',
@@ -61,7 +60,7 @@ export class Bus {
   public currentLocation: string;
 
   @Column("jsonb")
-  public route: ILocation[];
+  public route: Location[];
 
   @Column('text')
   public status: BusStatus;
