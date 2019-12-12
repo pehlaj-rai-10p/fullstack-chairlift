@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { ILocation } from '../interfaces/location';
 import { Booking } from './booking';
 import booking from '../routes/booking';
@@ -14,8 +14,7 @@ export class Bus {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @ManyToOne(_type => Booking, booking => booking.bus)
-  @JoinColumn({ name: 'busId', referencedColumnName: 'id' })
+  @OneToMany(_type => Booking, booking => booking.bus)
   public bookings: Booking[];
 
   @Column({
