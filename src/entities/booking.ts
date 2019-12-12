@@ -3,7 +3,7 @@ import { Bus } from './bus';
 import { Rider } from './rider';
 import { Location } from '../entities/location';
 
-@Entity('bus')
+@Entity('booking')
 export class Booking {
   @PrimaryGeneratedColumn()
   public id: number;
