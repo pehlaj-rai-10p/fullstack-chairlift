@@ -1,5 +1,6 @@
 import { Context } from 'koa';
 import * as services from '../services/booking';
+import { IBookingRequest } from '../interfaces/booking';
 
 export const getAll = async (ctx: Context, next: () => void) => {
     ctx.state.data = await services.getAll();
@@ -14,15 +15,16 @@ export const bookingDetails = async (ctx: Context, next: () => void) => {
 
 export const bookRide = async (ctx: Context, next: () => void) => {
 
-    const pickupLatLng: any = { lat: ctx.params.pickupLat, lng: ctx.params.pickupLng };
-    const dropOffLatLng: any = { lat: ctx.params.dropOffLat, lng: ctx.params.dropOffLng };
+    const booking: IBookingRequest = ctx.request.body;
+    // const pickupLatLng: any = { lat: ctx.params.pickupLat, lng: ctx.params.pickupLng };
+    // const dropOffLatLng: any = { lat: ctx.params.dropOffLat, lng: ctx.params.dropOffLng };
 
-    const booking = {
-        riderId: ctx.params.riderId,
-        busId: ctx.params.riderId,
-        pickupLocation: pickupLatLng,
-        dropOffLocation: dropOffLatLng,
-    };
+    // const booking = {
+    //     riderId: ctx.params.riderId,
+    //     busId: ctx.params.riderId,
+    //     pickupLocation: pickupLatLng,
+    //     dropOffLocation: dropOffLatLng,
+    // };
     ctx.state.data = await services.bookRide(booking);
     await next();
 };

@@ -1,6 +1,6 @@
 export class Location {
 
-    public lat: number;
+    public lat: string;
 
-    public lng: number;
+    public lng: string;
 }

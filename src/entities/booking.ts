@@ -20,10 +20,10 @@ export class Booking {
   public trackingNumber: string;
 
   @Column("jsonb")
-  public pickupLocation: Location;
+  public pickupLocation: { lat: string; lng: string };
 
   @Column("jsonb")
-  public dropOffLocation: Location;
+  public dropOffLocation: { lat: string; lng: string };
 
   @Column('timestamptz')
   public bookingTime: Date;

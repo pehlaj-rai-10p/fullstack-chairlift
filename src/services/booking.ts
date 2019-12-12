@@ -7,8 +7,6 @@ import { Bus } from '../entities/bus';
 import { Rider } from '../entities/rider';
 import { Booking } from '../entities/booking';
 import { IBookingRequest, IBookingCancelRequest } from '../interfaces/booking';
-import { Timestamp } from 'typeorm';
-import { ILocation } from '../interfaces/location';
 
 export const getAll = async () => {
     return repo.getAll();
@@ -26,16 +24,19 @@ export const bookRide = async (payload: IBookingRequest) => {
     await joi.validate(payload, {
         riderId: joi.number().required(),
         busId: joi.number().required(),
-        pickupLocation: joi.string().required(),
-        dropOffLocation: joi.string().required(),
-    });
+    }, { allowUnknown: true });
+
+    if (!payload.pickupLocation || !payload.dropOffLocation) {
+
+        return { success: false };
+    }
 
     const bus = await busRepo.getById(payload.busId) as Bus;
     const rider = await riderRepo.getById(payload.riderId) as Rider;
 
     if (bus.availableSeats <= 0) {
 
-        return null;
+        return { success: false };
     }
 
     const bookingTime: Date = new Date();
@@ -48,13 +49,18 @@ export const bookRide = async (payload: IBookingRequest) => {
     booking.pickupTime = bookingTime;
     booking.estimatedDropOffTime = bookingTime;
     booking.status = 'Idle';
-    booking.trackingNumber = Math.floor(10000000).toString();
+    booking.trackingNumber = Math.random.toString();
     booking.pickupLocation = payload.pickupLocation;
     booking.dropOffLocation = payload.dropOffLocation;
 
     //TODO populate fields here
     const result = await repo.insert(booking);
-    return result[0];
+
+    bus.availableSeats = bus.availableSeats - 1;
+
+    const busResult = await busRepo.update(bus.id, bus);
+
+    return result;
 };
 
 export const softDelete = async (id: number) => {
