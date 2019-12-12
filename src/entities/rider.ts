@@ -1,9 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Booking } from './booking';
 
 @Entity('rider')
 export class Rider {
   @PrimaryGeneratedColumn()
   public id: number;
+
+  @ManyToOne(_type => Booking, booking => booking.rider)
+  @JoinColumn({ name: 'riderId', referencedColumnName: 'id' })
+  public bookings: Booking[];
 
   @Column({
     type: 'character varying',

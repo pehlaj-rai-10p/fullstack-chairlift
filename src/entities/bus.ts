@@ -1,5 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { ILocation } from '../interfaces/location';
+import { Booking } from './booking';
+import booking from '../routes/booking';
 
 enum BusStatus {
   Idle = 'Idle',
@@ -11,6 +13,10 @@ enum BusStatus {
 export class Bus {
   @PrimaryGeneratedColumn()
   public id: number;
+
+  @ManyToOne(_type => Booking, booking => booking.bus)
+  @JoinColumn({ name: 'busId', referencedColumnName: 'id' })
+  public bookings: Booking[];
 
   @Column({
     type: 'character varying',

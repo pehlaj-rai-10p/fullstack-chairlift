@@ -1,38 +1,29 @@
-import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column, OneToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column } from 'typeorm';
 import { Bus } from './bus';
 import { Rider } from './rider';
-import { ILocation } from '../interfaces/location';
+import { Location } from '../entities/location';
 
 @Entity('bus')
 export class Booking {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @Column()
-  public busId: number;
-
-  @Column()
-  public riderId: number;
-
-  @OneToOne(_type => Bus)
+  @ManyToOne(_type => Bus, bus => bus.bookings)
   @JoinColumn({ name: 'busId', referencedColumnName: 'id' })
   public bus: Bus;
 
-  @OneToOne(_type => Rider)
+  @ManyToOne(_type => Rider, rider => rider.bookings)
   @JoinColumn({ name: 'riderId', referencedColumnName: 'id' })
   public rider: Rider;
 
-  @Column({
-    type: 'character varying',
-    length: '100'
-  })
+  @Column()
   public trackingNumber: string;
 
   @Column("jsonb")
-  public pickupLocation: ILocation;
+  public pickupLocation: Location;
 
   @Column("jsonb")
-  public dropOffLocation: ILocation;
+  public dropOffLocation: Location;
 
   @Column('timestamptz')
   public bookingTime: Date;
