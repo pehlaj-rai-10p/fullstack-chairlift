@@ -49,7 +49,7 @@ export const bookRide = async (payload: IBookingRequest) => {
     booking.pickupTime = bookingTime;
     booking.estimatedDropOffTime = bookingTime;
     booking.status = 'Idle';
-    booking.trackingNumber = Math.random.toString();
+    booking.trackingNumber = 'BK' + bookingTime.getTime();
     booking.pickupLocation = payload.pickupLocation;
     booking.dropOffLocation = payload.dropOffLocation;
 
