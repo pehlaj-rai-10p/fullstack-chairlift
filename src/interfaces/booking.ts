@@ -1,13 +1,10 @@
+import { Location } from '../entities/location';
+
 export interface IBookingRequest {
     riderId: number;
     busId: number;
-    bookingTime: Date;
-    pickupTime: Date;
-    dropOffTime: Date;
-    arrivalTime: Date;
-    estimatedDropOffTime: Date;
-    pickupLocation: JSON,
-    dropOffLocation: JSON,
+    pickupLocation: Location,
+    dropOffLocation: Location,
 }
 
 export interface IBookingCancelRequest {

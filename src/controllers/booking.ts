@@ -13,16 +13,15 @@ export const bookingDetails = async (ctx: Context, next: () => void) => {
 };
 
 export const bookRide = async (ctx: Context, next: () => void) => {
+
+    const pickupLatLng: any = { lat: ctx.params.pickupLat, lng: ctx.params.pickupLng };
+    const dropOffLatLng: any = { lat: ctx.params.dropOffLat, lng: ctx.params.dropOffLng };
+
     const booking = {
-        riderId: 0,
-        busId: 0,
-        bookingTime: new Date(),
-        pickupTime: new Date(),
-        dropOffTime: new Date(),
-        arrivalTime: new Date(),
-        estimatedDropOffTime: new Date(),
-        pickupLocation: JSON.parse("{}"),
-        dropOffLocation: JSON.parse("{}"),
+        riderId: ctx.params.riderId,
+        busId: ctx.params.riderId,
+        pickupLocation: pickupLatLng,
+        dropOffLocation: dropOffLatLng,
     };
     ctx.state.data = await services.bookRide(booking);
     await next();
