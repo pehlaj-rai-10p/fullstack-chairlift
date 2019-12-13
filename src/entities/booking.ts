@@ -19,11 +19,17 @@ export class Booking {
   @Column()
   public trackingNumber: string;
 
-  @Column("jsonb")
-  public pickupLocation: { lat: string; lng: string };
+  @Column({
+    name: 'pickuplocation',
+    type: 'jsonb',
+  })
+  public pickupLocation: Location;
 
-  @Column("jsonb")
-  public dropOffLocation: { lat: string; lng: string };
+  @Column({
+    name: 'dropofflocation',
+    type: 'jsonb',
+  })
+  public dropOffLocation: Location;
 
   @Column('timestamptz')
   public bookingTime: Date;
