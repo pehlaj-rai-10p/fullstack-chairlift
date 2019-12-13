@@ -1,6 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Booking } from './booking';
 
+export enum RiderStatus {
+  Idle = 'Idle',
+  RideBooked = 'RideBooked',
+  InRide = 'InRide'
+}
+
 @Entity('rider')
 export class Rider {
   @PrimaryGeneratedColumn()
@@ -51,11 +57,14 @@ export class Rider {
   })
   public profilePicUrl: string;
 
-  @Column({
-    type: 'character varying',
-    length: '100'
-  })
-  public status: string;
+  // @Column({
+  //   type: 'character varying',
+  //   length: '100'
+  // })
+  // public status: string;
+
+  @Column('text')
+  public status: RiderStatus;
 
   @Column({
     type: 'integer',

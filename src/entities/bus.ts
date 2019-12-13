@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Booking } from './booking';
 import { Location } from './location';
 
-enum BusStatus {
+export enum BusStatus {
   Idle = 'Idle',
   Booking = 'Booking',
   OnRoute = 'OnRoute'

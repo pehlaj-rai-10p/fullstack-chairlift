@@ -3,8 +3,8 @@ import * as joi from 'joi';
 import * as repo from '../repositories/booking';
 import * as busRepo from '../repositories/bus';
 import * as riderRepo from '../repositories/rider';
-import { Bus } from '../entities/bus';
-import { Rider } from '../entities/rider';
+import { Bus, BusStatus } from '../entities/bus';
+import { Rider, RiderStatus } from '../entities/rider';
 import { Booking } from '../entities/booking';
 import { IBookingRequest, IBookingCancelRequest } from '../interfaces/booking';
 
@@ -57,10 +57,14 @@ export const bookRide = async (payload: IBookingRequest) => {
     const result = await repo.insert(booking);
 
     bus.availableSeats = bus.availableSeats - 1;
+    bus.status = BusStatus.Booking;
+    bus.currentLocation = '{}';
+    const busUpdateResult = await busRepo.update(bus.id, bus);
 
-    const busResult = await busRepo.update(bus.id, bus);
+    rider.status = RiderStatus.RideBooked;
+    const riderUpdateResult = await riderRepo.update(rider.id, rider);
 
-    return result;
+    return result && busUpdateResult && riderUpdateResult;
 };
 
 export const softDelete = async (id: number) => {
