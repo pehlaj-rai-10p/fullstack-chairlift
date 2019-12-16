@@ -5,11 +5,15 @@ import * as busRepo from '../repositories/bus';
 import * as riderRepo from '../repositories/rider';
 import { Bus, BusStatus } from '../entities/bus';
 import { Rider, RiderStatus } from '../entities/rider';
-import { Booking } from '../entities/booking';
+import { Booking, RideStatus } from '../entities/booking';
 import { IBookingRequest, IBookingCancelRequest } from '../interfaces/booking';
 
 export const getAll = async () => {
     return repo.getAll();
+};
+
+export const filteredBooking = async (riderId: Number, status: string) => {
+    return repo.filteredBooking(riderId, status);
 };
 
 export const getById = async (id: number) => {
@@ -48,7 +52,7 @@ export const bookRide = async (payload: IBookingRequest) => {
     booking.dropOffTime = bookingTime;
     booking.pickupTime = bookingTime;
     booking.estimatedDropOffTime = bookingTime;
-    booking.status = 'Idle';
+    booking.status = RideStatus.Idle;
     booking.trackingNumber = 'BK' + bookingTime.getTime();
     booking.pickupLocation = payload.pickupLocation;
     booking.dropOffLocation = payload.dropOffLocation;

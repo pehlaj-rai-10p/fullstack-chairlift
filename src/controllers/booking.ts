@@ -1,9 +1,34 @@
 import { Context } from 'koa';
 import * as services from '../services/booking';
 import { IBookingRequest } from '../interfaces/booking';
+import { RideStatus } from '../entities/booking';
 
 export const getAll = async (ctx: Context, next: () => void) => {
-    ctx.state.data = await services.getAll();
+    const status = ctx.query.status;
+    const riderId = ctx.query.riderId;
+    if (status && riderId) {
+        ctx.state.data = await services.filteredBooking(riderId, status);
+    } else {
+        ctx.state.data = await services.getAll();
+    }
+    await next();
+};
+
+export const getCurrentBookings = async (ctx: Context, next: () => void) => {
+    var riderId = ctx.query.riderId;
+    ctx.state.data = await services.filteredBooking(riderId, RideStatus.InProgress);
+    await next();
+};
+
+export const getFutureBookings = async (ctx: Context, next: () => void) => {
+    var riderId = ctx.query.riderId;
+    ctx.state.data = await services.filteredBooking(riderId, RideStatus.Idle);
+    await next();
+};
+
+export const getCompletedBookings = async (ctx: Context, next: () => void) => {
+    var riderId = ctx.query.riderId;
+    ctx.state.data = await services.filteredBooking(riderId, RideStatus.Complete);
     await next();
 };
 
