@@ -31,16 +31,10 @@ export class Booking {
   @Column()
   public trackingNumber: string;
 
-  @Column({
-    name: 'pickuplocation',
-    type: 'jsonb',
-  })
+  @Column('jsonb')
   public pickupLocation: Location;
 
-  @Column({
-    name: 'dropofflocation',
-    type: 'jsonb',
-  })
+  @Column('jsonb')
   public dropOffLocation: Location;
 
   @Column('timestamptz')
