@@ -27,7 +27,7 @@ services:
       - ./bin/server
 
   postgres:
-    image: mdillon/postgis:10-alpine
+    image: postgres:12.1    
     container_name: charilift-db
     networks:
       - chairlift
