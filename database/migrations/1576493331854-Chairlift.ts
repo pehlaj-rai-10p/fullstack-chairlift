@@ -191,12 +191,14 @@ export class Chairlift1576493331854 implements MigrationInterface {
                         name: 'mobileNumber',
                         type: 'character varying',
                         isNullable: false,
+                        isUnique: true,
                         length: '20',
                     },
                     {
                         name: 'emailAddress',
                         type: 'character varying',
                         isNullable: false,
+                        isUnique: true,
                         length: '100',
                     },
                     {
@@ -267,6 +269,7 @@ export class Chairlift1576493331854 implements MigrationInterface {
                         name: 'trackingNumber',
                         type: 'character varying',
                         isNullable: false,
+                        isUnique: true,
                         length: '30',
                     },
                     {
