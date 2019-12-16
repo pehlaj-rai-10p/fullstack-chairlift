@@ -1,6 +1,6 @@
-import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
+import { MigrationInterface, QueryRunner, TableForeignKey, Table } from "typeorm";
 
-export class Chairlift1576493331854 implements MigrationInterface {
+export class ChairLift1576502490714 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
 
@@ -69,6 +69,7 @@ export class Chairlift1576493331854 implements MigrationInterface {
                         name: 'registrationNumber',
                         type: 'character varying',
                         isNullable: false,
+                        isUnique: true,
                         length: '20',
                     },
                     {
