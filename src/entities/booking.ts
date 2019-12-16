@@ -17,6 +17,12 @@ export class Booking {
   public rider: Rider;
 
   @Column()
+  public busId: number;
+
+  @Column()
+  public riderId: number;
+
+  @Column()
   public trackingNumber: string;
 
   @Column({
