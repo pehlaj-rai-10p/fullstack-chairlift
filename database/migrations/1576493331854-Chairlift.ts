@@ -69,19 +69,19 @@ export class Chairlift1576493331854 implements MigrationInterface {
                         name: 'registrationNumber',
                         type: 'character varying',
                         isNullable: false,
-                        length: '100',
+                        length: '20',
                     },
                     {
                         name: 'make',
                         type: 'character varying',
                         isNullable: false,
-                        length: '100',
+                        length: '50',
                     },
                     {
                         name: 'model',
                         type: 'character varying',
                         isNullable: false,
-                        length: '100',
+                        length: '50',
                     },
                     {
                         name: 'year',
@@ -167,7 +167,7 @@ export class Chairlift1576493331854 implements MigrationInterface {
                         name: 'userName',
                         type: 'character varying',
                         isNullable: false,
-                        length: '100',
+                        length: '50',
                     },
                     {
                         name: 'passwordHash',
@@ -179,19 +179,19 @@ export class Chairlift1576493331854 implements MigrationInterface {
                         name: 'firstName',
                         type: 'character varying',
                         isNullable: false,
-                        length: '100',
+                        length: '50',
                     },
                     {
                         name: 'lastName',
                         type: 'character varying',
                         isNullable: false,
-                        length: '100',
+                        length: '50',
                     },
                     {
                         name: 'mobileNumber',
                         type: 'character varying',
                         isNullable: false,
-                        length: '100',
+                        length: '20',
                     },
                     {
                         name: 'emailAddress',
@@ -267,7 +267,7 @@ export class Chairlift1576493331854 implements MigrationInterface {
                         name: 'trackingNumber',
                         type: 'character varying',
                         isNullable: false,
-                        length: '100',
+                        length: '30',
                     },
                     {
                         name: 'status',
