@@ -35,6 +35,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/pg": "^7.11.2",
     "boom": "7.3.0",
     "bunyan": "^1.8.12",
     "convict": "5.0.0",
@@ -50,10 +51,10 @@
     "koa-static-server": "1.4.0",
     "koa2-cors": "2.0.6",
     "node-cache": "4.2.0",
-    "pg": "^7.11.0",
+    "pg": "^7.14.0",
     "request": "2.88.0",
     "request-promise-native": "1.0.7",
-    "typeorm": "0.3.0-alpha.23"
+    "typeorm": "0.2.21"
   },
   "devDependencies": {
     "@types/boom": "7.2.1",
