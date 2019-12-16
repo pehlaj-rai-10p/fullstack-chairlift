@@ -274,9 +274,9 @@ export class Chairlift1576493331854 implements MigrationInterface {
                     },
                     {
                         name: 'status',
-                        type: 'character varying',
+                        type: 'enum',
+                        enum: ['Idle', 'InProgress', 'Complete'],
                         isNullable: false,
-                        length: '100',
                     },
                     {
                         name: 'bookingTime',
