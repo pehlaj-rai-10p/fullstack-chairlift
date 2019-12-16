@@ -32,7 +32,7 @@ export const bookRide = async (payload: IBookingRequest) => {
 
     if (!payload.pickupLocation || !payload.dropOffLocation) {
 
-        return { success: false };
+        return { success: false, message: 'Please provide pickup/dropoff location.' };
     }
 
     const bus = await busRepo.getById(payload.busId) as Bus;
@@ -40,7 +40,7 @@ export const bookRide = async (payload: IBookingRequest) => {
 
     if (bus.availableSeats <= 0) {
 
-        return { success: false };
+        return { success: false, message: 'Bus is full.' };
     }
 
     const bookingTime: Date = new Date();
@@ -73,40 +73,44 @@ export const bookRide = async (payload: IBookingRequest) => {
     bookings.forEach(async booking => {
 
         //if (booking.rider.id == rider.id)
-        {
+        //{
 
-            if (booking.bus.availableSeats == 0) {
+        const bus = await busRepo.getById(booking.busId) as Bus;
+        const rider = await riderRepo.getById(booking.riderId) as Rider;
+        booking.bus = bus;
+        booking.rider = rider;
+        if (bus.availableSeats == 0) {
 
-                booking.bus.status = BusStatus.OnRoute;
-                booking.arrivalTime = new Date();
-                booking.pickupTime = new Date();
-                await busRepo.update(booking.bus.id, booking.bus);
+            booking.bus.status = BusStatus.OnRoute;
+            booking.arrivalTime = new Date();
+            booking.pickupTime = new Date();
+            await busRepo.update(booking.bus.id, booking.bus);
 
-                var freeRidesCount = booking.rider.numFreeRides;
-                booking.rider.status = RiderStatus.InRide;
-                booking.rider.numFreeRides = freeRidesCount > 0 ? freeRidesCount - 1 : 0;
-                await riderRepo.update(booking.rider.id, booking.rider);
+            var freeRidesCount = booking.rider.numFreeRides;
+            booking.rider.status = RiderStatus.InRide;
+            booking.rider.numFreeRides = freeRidesCount > 0 ? freeRidesCount - 1 : 0;
+            await riderRepo.update(booking.rider.id, booking.rider);
 
-                booking.status = RideStatus.InProgress;
-                await repo.update(booking.id, booking);
-            }
-            else if (booking.bus.status == BusStatus.OnRoute) {
-                booking.bus.status = BusStatus.Idle;
-                booking.dropOffTime = new Date();
-                booking.bus.availableSeats = booking.bus.capacity;
-                await busRepo.update(booking.bus.id, booking.bus);
-
-                booking.rider.status = RiderStatus.Idle;
-                await riderRepo.update(booking.rider.id, booking.rider);
-
-                booking.status = RideStatus.Complete;
-                await repo.update(booking.id, booking);
-            }
+            booking.status = RideStatus.InProgress;
+            await repo.update(booking.id, booking);
         }
+        else if (bus.status == BusStatus.OnRoute) {
+            booking.bus.status = BusStatus.Idle;
+            booking.dropOffTime = new Date();
+            booking.bus.availableSeats = booking.bus.capacity;
+            await busRepo.update(booking.bus.id, booking.bus);
+
+            booking.rider.status = RiderStatus.Idle;
+            await riderRepo.update(booking.rider.id, booking.rider);
+
+            booking.status = RideStatus.Complete;
+            await repo.update(booking.id, booking);
+        }
+        //}
     });
 
 
-    return result && busUpdateResult && riderUpdateResult;
+    return result;// && busUpdateResult && riderUpdateResult;
 };
 
 export const softDelete = async (id: number) => {
