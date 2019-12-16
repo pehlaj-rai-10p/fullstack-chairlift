@@ -68,6 +68,44 @@ export const bookRide = async (payload: IBookingRequest) => {
     rider.status = RiderStatus.RideBooked;
     const riderUpdateResult = await riderRepo.update(rider.id, rider);
 
+    const bookings = await repo.getAll();
+
+    bookings.forEach(async booking => {
+
+        //if (booking.rider.id == rider.id)
+        {
+
+            if (booking.bus.availableSeats == 0) {
+
+                booking.bus.status = BusStatus.OnRoute;
+                booking.arrivalTime = new Date();
+                booking.pickupTime = new Date();
+                await busRepo.update(booking.bus.id, booking.bus);
+
+                var freeRidesCount = booking.rider.numFreeRides;
+                booking.rider.status = RiderStatus.InRide;
+                booking.rider.numFreeRides = freeRidesCount > 0 ? freeRidesCount - 1 : 0;
+                await riderRepo.update(booking.rider.id, booking.rider);
+
+                booking.status = RideStatus.InProgress;
+                await repo.update(booking.id, booking);
+            }
+            else if (booking.bus.status == BusStatus.OnRoute) {
+                booking.bus.status = BusStatus.Idle;
+                booking.dropOffTime = new Date();
+                booking.bus.availableSeats = booking.bus.capacity;
+                await busRepo.update(booking.bus.id, booking.bus);
+
+                booking.rider.status = RiderStatus.Idle;
+                await riderRepo.update(booking.rider.id, booking.rider);
+
+                booking.status = RideStatus.Complete;
+                await repo.update(booking.id, booking);
+            }
+        }
+    });
+
+
     return result && busUpdateResult && riderUpdateResult;
 };
 
