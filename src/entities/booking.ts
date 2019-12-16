@@ -3,6 +3,12 @@ import { Bus } from './bus';
 import { Rider } from './rider';
 import { Location } from '../entities/location';
 
+export enum RideStatus {
+  Idle = "Idle",
+  InProgress = "InProgress",
+  Complete = "Complete"
+}
+
 @Entity('booking')
 export class Booking {
   @PrimaryGeneratedColumn()
@@ -53,7 +59,7 @@ export class Booking {
   public dropOffTime: Date;
 
   @Column()
-  public status: string;
+  public status: RideStatus;
 
   @Column({
     type: 'boolean',
