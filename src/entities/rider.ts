@@ -12,8 +12,8 @@ export class Rider {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @OneToMany(_type => Booking, booking => booking.rider)
-  public bookings: Booking[];
+  //@OneToMany(_type => Booking, booking => booking.rider)
+  //public bookings: Booking[];
 
   @Column({
     type: 'character varying',

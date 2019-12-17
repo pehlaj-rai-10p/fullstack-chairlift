@@ -13,7 +13,7 @@ export class Bus {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @OneToMany(_type => Booking, booking => booking.bus)
+  //@OneToMany(_type => Booking, booking => booking.bus)
   public bookings: Booking[];
 
   @Column({

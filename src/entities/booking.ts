@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column, Exclusion } from 'typeorm';
 import { Bus } from './bus';
 import { Rider } from './rider';
 import { Location } from '../entities/location';
@@ -14,13 +14,13 @@ export class Booking {
   @PrimaryGeneratedColumn()
   public id: number;
 
-  @ManyToOne(_type => Bus, bus => bus.bookings)
-  @JoinColumn({ name: 'busId', referencedColumnName: 'id' })
-  public bus: Bus;
+  //@ManyToOne(_type => Bus, bus => bus.bookings)
+  //@JoinColumn({ name: 'busId', referencedColumnName: 'id' })
+  //public bus: Bus;
 
-  @ManyToOne(_type => Rider, rider => rider.bookings)
-  @JoinColumn({ name: 'riderId', referencedColumnName: 'id' })
-  public rider: Rider;
+  // @ManyToOne(_type => Rider, rider => rider.bookings)
+  //@JoinColumn({ name: 'riderId', referencedColumnName: 'id' })
+  //public rider: Rider;
 
   @Column()
   public busId: number;

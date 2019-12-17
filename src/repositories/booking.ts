@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 import { Booking } from '../entities/booking';
 import * as busRepo from './bus';
 import * as riderRepo from './rider';
-import { RiderStatus, Rider } from '../entities/rider';
+import { Rider } from '../entities/rider';
 import { Bus } from '../entities/bus';
 
 export const getAll = async () => {
@@ -17,8 +17,8 @@ export const getById = async (id: number) => {
     const booking = await getRepository(Booking).findOne({ id }) as Booking;
     const bus = await busRepo.getById((booking as Booking).busId);
     const rider = await riderRepo.getById((booking as Booking).riderId);
-    booking.bus = bus as Bus;
-    booking.rider = rider as Rider;
+    //booking.bus = bus as Bus;
+    //booking.rider = rider as Rider;
     return booking;
 }
 

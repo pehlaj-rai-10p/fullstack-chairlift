@@ -32,21 +32,24 @@ export const startRide = async (bookingId: number) => {
 
     const booking = await repo.getById(bookingId) as Booking;
 
+    if (!booking) {
+        return { success: false, message: 'Booking details not found.' };
+    }
+
+    const bus = await busRepo.getById(booking.busId) as Bus;
+    const rider = await riderRepo.getById(booking.riderId) as Rider;
+
+    rider.status = RiderStatus.InRide;
+    rider.numFreeRides = rider.decreaseFreeRidesCount();
+    const riderUpdateResult = await riderRepo.update(rider.id, rider);
+
+    bus.status = BusStatus.OnRoute;
+    const busUpdateResult = await busRepo.update(bus.id, bus);
+
     booking.status = RideStatus.InProgress;
     booking.arrivalTime = new Date();
     booking.pickupTime = new Date();
-    const result = await repo.update(bookingId, booking);
-
-    const rider = await riderRepo.getById(booking.riderId) as Rider;
-    rider.status = RiderStatus.InRide;
-    rider.numFreeRides = rider.decreaseFreeRidesCount();
-
-    await riderRepo.update(rider.id, rider);
-    const riderUpdateResult = await riderRepo.update(booking.riderId, rider);
-
-    const bus = await busRepo.getById(booking.busId) as Bus;
-    bus.status = BusStatus.OnRoute;
-    const busUpdateResult = await busRepo.update(bus.id, bus);
+    const result = await repo.update(booking.id, booking);
 
     return { success: result && busUpdateResult && riderUpdateResult, booking: result, bus: busUpdateResult, rider: riderUpdateResult };
 }
@@ -68,8 +71,6 @@ export const endRide = async (bookingId: number) => {
     bus.availableSeats = bus.capacity;
     const busUpdateResult = await busRepo.update(bus.id, bus);
 
-    booking.bus = bus;
-    booking.rider = rider;
     booking.dropOffTime = new Date();
     booking.status = RideStatus.Complete;
     const result = await repo.update(bookingId, booking);
@@ -98,8 +99,6 @@ export const bookRide = async (payload: IBookingRequest) => {
 
     const bookingTime: Date = new Date();
     const booking = new Booking();
-    booking.bus = bus;
-    booking.rider = rider;
     booking.bookingTime = bookingTime;
     booking.arrivalTime = bookingTime;
     booking.dropOffTime = bookingTime;
@@ -115,7 +114,7 @@ export const bookRide = async (payload: IBookingRequest) => {
 
     bus.availableSeats = bus.availableSeats - 1;
     bus.status = BusStatus.Booking;
-    bus.currentLocation = '{}';
+    //bus.currentLocation = '{}';
     const busUpdateResult = await busRepo.update(bus.id, bus);
 
     rider.status = RiderStatus.RideBooked;
