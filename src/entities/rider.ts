@@ -90,4 +90,10 @@ export class Rider {
     default: false,
   })
   public isDeleted: boolean;
+
+  public decreaseFreeRidesCount(): number {
+
+    this.numFreeRides = this.numFreeRides > 0 ? this.numFreeRides - 1 : 0;
+    return this.numFreeRides;
+  }
 }

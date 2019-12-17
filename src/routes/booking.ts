@@ -13,6 +13,10 @@ router.get('/:id', ctrl.bookingDetails);
 
 router.post('/', ctrl.bookRide);
 
+router.post('/start', ctrl.startRide);
+
+router.post('/end', ctrl.endRide);
+
 router.delete('/:id', ctrl.cancelBooking);
 
 const routes = router.routes();

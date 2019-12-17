@@ -7,6 +7,6 @@ export interface IBookingRequest {
     dropOffLocation: Location,
 }
 
-export interface IBookingCancelRequest {
+export interface IBookingUpdateRequest {
     bookingId: number;
 }

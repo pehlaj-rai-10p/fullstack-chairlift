@@ -6,7 +6,7 @@ import * as riderRepo from '../repositories/rider';
 import { Bus, BusStatus } from '../entities/bus';
 import { Rider, RiderStatus } from '../entities/rider';
 import { Booking, RideStatus } from '../entities/booking';
-import { IBookingRequest, IBookingCancelRequest } from '../interfaces/booking';
+import { IBookingRequest } from '../interfaces/booking';
 
 export const getAll = async () => {
     return repo.getAll();
@@ -23,6 +23,57 @@ export const getById = async (id: number) => {
     }
     return result;
 };
+
+export const startRide = async (bookingId: number) => {
+
+    if (bookingId <= 0) {
+        return { success: false, message: 'Provide valid booking ID.' };
+    }
+
+    const booking = await repo.getById(bookingId) as Booking;
+
+    booking.status = RideStatus.InProgress;
+    booking.arrivalTime = new Date();
+    booking.pickupTime = new Date();
+    const result = await repo.update(bookingId, booking);
+
+    const rider = await riderRepo.getById(booking.riderId) as Rider;
+    rider.status = RiderStatus.InRide;
+    rider.numFreeRides = rider.decreaseFreeRidesCount();
+
+    await riderRepo.update(rider.id, rider);
+    const riderUpdateResult = await riderRepo.update(booking.riderId, rider);
+
+    const bus = await busRepo.getById(booking.busId) as Bus;
+    bus.status = BusStatus.OnRoute;
+    const busUpdateResult = await repo.update(bookingId, booking);
+
+    return { success: result && busUpdateResult && riderUpdateResult, booking: result, bus: busUpdateResult, rider: riderUpdateResult };
+}
+
+export const endRide = async (bookingId: number) => {
+
+    if (bookingId <= 0) {
+        return { success: false, message: 'Provide valid booking ID.' };
+    }
+
+    const booking = await repo.getById(bookingId) as Booking;
+
+    booking.dropOffTime = new Date();
+    booking.status = RideStatus.Complete;
+    const result = await repo.update(bookingId, booking);
+
+    const rider = await riderRepo.getById(booking.riderId) as Rider;
+    rider.status = RiderStatus.Idle;
+    const riderUpdateResult = await riderRepo.update(booking.riderId, rider);
+
+    const bus = await busRepo.getById(booking.busId) as Bus;
+    bus.status = BusStatus.Idle;
+    bus.availableSeats = bus.capacity;
+    const busUpdateResult = await repo.update(bookingId, booking);
+
+    return { success: result && busUpdateResult && riderUpdateResult, booking: result, bus: busUpdateResult, rider: riderUpdateResult };
+}
 
 export const bookRide = async (payload: IBookingRequest) => {
     await joi.validate(payload, {
@@ -68,49 +119,7 @@ export const bookRide = async (payload: IBookingRequest) => {
     rider.status = RiderStatus.RideBooked;
     const riderUpdateResult = await riderRepo.update(rider.id, rider);
 
-    const bookings = await repo.getAll();
-
-    bookings.forEach(async booking => {
-
-        //if (booking.rider.id == rider.id)
-        //{
-
-        const bus = await busRepo.getById(booking.busId) as Bus;
-        const rider = await riderRepo.getById(booking.riderId) as Rider;
-        booking.bus = bus;
-        booking.rider = rider;
-        if (bus.availableSeats == 0) {
-
-            booking.bus.status = BusStatus.OnRoute;
-            booking.arrivalTime = new Date();
-            booking.pickupTime = new Date();
-            await busRepo.update(booking.bus.id, booking.bus);
-
-            var freeRidesCount = booking.rider.numFreeRides;
-            booking.rider.status = RiderStatus.InRide;
-            booking.rider.numFreeRides = freeRidesCount > 0 ? freeRidesCount - 1 : 0;
-            await riderRepo.update(booking.rider.id, booking.rider);
-
-            booking.status = RideStatus.InProgress;
-            await repo.update(booking.id, booking);
-        }
-        else if (bus.status == BusStatus.OnRoute) {
-            booking.bus.status = BusStatus.Idle;
-            booking.dropOffTime = new Date();
-            booking.bus.availableSeats = booking.bus.capacity;
-            await busRepo.update(booking.bus.id, booking.bus);
-
-            booking.rider.status = RiderStatus.Idle;
-            await riderRepo.update(booking.rider.id, booking.rider);
-
-            booking.status = RideStatus.Complete;
-            await repo.update(booking.id, booking);
-        }
-        //}
-    });
-
-
-    return result;// && busUpdateResult && riderUpdateResult;
+    return { success: result && busUpdateResult && riderUpdateResult, booking: result, bus: busUpdateResult, rider: riderUpdateResult };
 };
 
 export const softDelete = async (id: number) => {

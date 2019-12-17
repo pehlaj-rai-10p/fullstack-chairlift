@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 import * as services from '../services/booking';
-import { IBookingRequest } from '../interfaces/booking';
+import { IBookingRequest, IBookingUpdateRequest } from '../interfaces/booking';
 import { RideStatus } from '../entities/booking';
 
 export const getAll = async (ctx: Context, next: () => void) => {
@@ -51,6 +51,20 @@ export const bookRide = async (ctx: Context, next: () => void) => {
     //     dropOffLocation: dropOffLatLng,
     // };
     ctx.state.data = await services.bookRide(booking);
+    await next();
+};
+
+export const startRide = async (ctx: Context, next: () => void) => {
+
+    const booking: IBookingUpdateRequest = ctx.request.body;
+    ctx.state.data = await services.startRide(booking.bookingId);
+    await next();
+};
+
+export const endRide = async (ctx: Context, next: () => void) => {
+
+    const booking: IBookingUpdateRequest = ctx.request.body;
+    ctx.state.data = await services.endRide(booking.bookingId);
     await next();
 };
 
