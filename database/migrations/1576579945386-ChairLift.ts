@@ -1,6 +1,7 @@
-import { MigrationInterface, QueryRunner, TableForeignKey, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { UniqueMetadata } from "typeorm/metadata/UniqueMetadata";
 
-export class ChairLift1576502490714 implements MigrationInterface {
+export class ChairLift1576579945386 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<any> {
 
@@ -9,10 +10,6 @@ export class ChairLift1576502490714 implements MigrationInterface {
         await this.createTableBus(queryRunner);
 
         await this.createTableBooking(queryRunner);
-
-        await this.createBusForeignKeyInBooking(queryRunner);
-
-        await this.createRiderForeignKeyInBooking(queryRunner);
     }
 
     public async down(queryRunner: QueryRunner): Promise<any> {
@@ -26,26 +23,6 @@ export class ChairLift1576502490714 implements MigrationInterface {
         await queryRunner.dropColumn("booking", "riderId");
 
         await queryRunner.dropTable('booking');
-    }
-
-    private createBusForeignKeyInBooking(queryRunner: QueryRunner) {
-
-        queryRunner.createForeignKey("booking", new TableForeignKey({
-            columnNames: ["busId"],
-            referencedColumnNames: ["id"],
-            referencedTableName: "bus",
-            onDelete: "CASCADE"
-        }));
-    }
-
-    private createRiderForeignKeyInBooking(queryRunner: QueryRunner) {
-
-        queryRunner.createForeignKey("booking", new TableForeignKey({
-            columnNames: ["riderId"],
-            referencedColumnNames: ["id"],
-            referencedTableName: "rider",
-            onDelete: "CASCADE"
-        }));
     }
 
     /**
@@ -321,8 +298,23 @@ export class ChairLift1576502490714 implements MigrationInterface {
                         default: false,
                     },
                 ],
+                foreignKeys: [
+                    {
+                        columnNames: ["busId"],
+                        referencedTableName: "bus",
+                        referencedColumnNames: ["id"]
+                    },
+                    {
+                        columnNames: ["riderId"],
+                        referencedTableName: "rider",
+                        referencedColumnNames: ["id"]
+                    }
+                ],
+                uniques: [{
+                    name: "UNIQUE_BUS_RIDER",
+                    columnNames: ["busId", "riderId"],
+                }],
             }),
         );
-
     }
 }
