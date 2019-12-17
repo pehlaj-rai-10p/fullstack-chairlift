@@ -15,8 +15,8 @@ export const filteredBooking = async (riderId: Number, status: string) => {
 
 export const getById = async (id: number) => {
     const booking = await getRepository(Booking).findOne({ id }) as Booking;
-    const bus = await busRepo.getById((booking as Booking).busId);
-    const rider = await riderRepo.getById((booking as Booking).riderId);
+    //const bus = await busRepo.getById((booking as Booking).busId);
+    //const rider = await riderRepo.getById((booking as Booking).riderId);
     //booking.bus = bus as Bus;
     //booking.rider = rider as Rider;
     return booking;
