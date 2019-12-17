@@ -46,7 +46,7 @@ export const startRide = async (bookingId: number) => {
 
     const bus = await busRepo.getById(booking.busId) as Bus;
     bus.status = BusStatus.OnRoute;
-    const busUpdateResult = await repo.update(bookingId, booking);
+    const busUpdateResult = await busRepo.update(bus.id, bus);
 
     return { success: result && busUpdateResult && riderUpdateResult, booking: result, bus: busUpdateResult, rider: riderUpdateResult };
 }
@@ -59,10 +59,6 @@ export const endRide = async (bookingId: number) => {
 
     const booking = await repo.getById(bookingId) as Booking;
 
-    booking.dropOffTime = new Date();
-    booking.status = RideStatus.Complete;
-    const result = await repo.update(bookingId, booking);
-
     const rider = await riderRepo.getById(booking.riderId) as Rider;
     rider.status = RiderStatus.Idle;
     const riderUpdateResult = await riderRepo.update(booking.riderId, rider);
@@ -70,7 +66,13 @@ export const endRide = async (bookingId: number) => {
     const bus = await busRepo.getById(booking.busId) as Bus;
     bus.status = BusStatus.Idle;
     bus.availableSeats = bus.capacity;
-    const busUpdateResult = await repo.update(bookingId, booking);
+    const busUpdateResult = await busRepo.update(bus.id, bus);
+
+    booking.bus = bus;
+    booking.rider = rider;
+    booking.dropOffTime = new Date();
+    booking.status = RideStatus.Complete;
+    const result = await repo.update(bookingId, booking);
 
     return { success: result && busUpdateResult && riderUpdateResult, booking: result, bus: busUpdateResult, rider: riderUpdateResult };
 }
