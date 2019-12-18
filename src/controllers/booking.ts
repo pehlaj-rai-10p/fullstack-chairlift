@@ -2,14 +2,15 @@ import { Context } from 'koa';
 import * as services from '../services/booking';
 import { IBookingRequest, IBookingUpdateRequest } from '../interfaces/booking';
 import { RideStatus } from '../entities/booking';
+import { string } from 'joi';
 
 export const getAll = async (ctx: Context, next: () => void) => {
     const status = ctx.query.status;
     const riderId = ctx.query.riderId;
-    if (status && riderId) {
+    if (status && (status as string).length > 0 && riderId) {
         ctx.state.data = await services.filteredBooking(riderId, status);
     } else {
-        ctx.state.data = await services.getAll();
+        ctx.state.data = await services.getAll(riderId);
     }
     await next();
 };

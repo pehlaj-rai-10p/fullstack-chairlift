@@ -8,8 +8,8 @@ import { Rider, RiderStatus } from '../entities/rider';
 import { Booking, RideStatus } from '../entities/booking';
 import { IBookingRequest } from '../interfaces/booking';
 
-export const getAll = async () => {
-    return repo.getAll();
+export const getAll = async (riderId: Number) => {
+    return repo.getAll(riderId);
 };
 
 export const filteredBooking = async (riderId: Number, status: string) => {
