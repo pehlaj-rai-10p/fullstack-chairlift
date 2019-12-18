@@ -145,6 +145,7 @@ export class ChairLift1576579945386 implements MigrationInterface {
                         name: 'userName',
                         type: 'character varying',
                         isNullable: false,
+                        isUnique: true,
                         length: '50',
                     },
                     {
