@@ -1,5 +1,6 @@
 import { Context } from 'koa';
 import * as services from '../services/rider';
+import { IRiderLoginRequest } from '../interfaces/rider';
 
 export const getAll = async (ctx: Context, next: () => void) => {
     ctx.state.data = await services.getAll();
@@ -11,6 +12,13 @@ export const getById = async (ctx: Context, next: () => void) => {
     ctx.state.data = await services.getById(id);
     await next();
 };
+
+export const getByUserName = async (ctx: Context, next: () => void) => {
+    const loginRequest: IRiderLoginRequest = ctx.request.body;
+    ctx.state.data = await services.getByUserName(loginRequest.userName);
+    await next();
+};
+
 
 export const registerRider = async (ctx: Context, next: () => void) => {
     const rider = {

@@ -9,6 +9,10 @@ export const getById = async (id: number) => {
     return getRepository(Rider).findOne({ id });
 }
 
+export const getByUserName = async (userName: string) => {
+    return getRepository(Rider).findOne({ userName });
+}
+
 export const insert = async (rider: Rider) => {
     return getRepository(Rider).insert(rider);
 }

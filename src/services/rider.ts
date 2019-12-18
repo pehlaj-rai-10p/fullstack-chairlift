@@ -18,6 +18,14 @@ export const getById = async (id: number) => {
     return result;
 };
 
+export const getByUserName = async (userName: string) => {
+    const result = await riderRepo.getByUserName(userName);
+    if (!result) {
+        boom.badRequest('Invalid id');
+    }
+    return result;
+};
+
 export const registerRider = async (payload: IRiderRequest) => {
     await joi.validate(payload, {
         userName: joi.string().required(),
