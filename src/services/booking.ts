@@ -99,6 +99,8 @@ export const bookRide = async (payload: IBookingRequest) => {
 
     const bookingTime: Date = new Date();
     const booking = new Booking();
+    booking.busId = payload.busId;
+    booking.riderId = payload.riderId;
     booking.bookingTime = bookingTime;
     booking.arrivalTime = bookingTime;
     booking.dropOffTime = bookingTime;
