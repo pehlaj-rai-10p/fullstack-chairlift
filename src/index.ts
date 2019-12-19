@@ -4,6 +4,8 @@ import * as koaBodyparser from 'koa-bodyparser';
 import * as cors from 'koa2-cors';
 import * as jsonMiddleware from 'koa-json';
 import config from '../config';
+import { AppServer } from '../src/socket/server';
+import { MyClient } from '../src/socket/client';
 
 import { Logger } from './utils/logger';
 import { bootstrap } from './bootstrap/index';
@@ -12,6 +14,7 @@ import { bootstrap } from './bootstrap/index';
 import routeMiddleware from './routes/index';
 import errorMiddleware from './middlewares/error';
 import responseMiddleware from './middlewares/response';
+import { Server } from 'typeorm';
 
 const logger = new Logger('chairlift').createLogger();
 
@@ -40,6 +43,10 @@ bootstrap()
     app.use(jsonMiddleware());
     app.use(routeMiddleware());
     app.use(responseMiddleware());
+
+    const sockerServer = new AppServer(app);
+
+    const client = new MyClient();
 
     app.listen(config.server.port, () => {
       console.info('server started on port %d', config.server.port);

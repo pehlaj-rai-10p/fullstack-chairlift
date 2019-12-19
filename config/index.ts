@@ -36,7 +36,7 @@ const config = convict<IConfig>({
     port: {
       format: 'port',
       env: 'NODE_PORT',
-      default: 4001,
+      default: 4003,
     },
   },
   api: {

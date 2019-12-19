@@ -8,6 +8,8 @@ RUN npm install
 COPY . .
 
 EXPOSE 4001
+EXPOSE 4002
+EXPOSE 4003
 EXPOSE 5858
 
 ENTRYPOINT ["./entrypoint.sh"]

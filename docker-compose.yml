@@ -16,6 +16,8 @@ services:
       - './doc:/app/doc'
     ports:
       - 4001:4001
+      - 4002:4002
+      - 4003:4003
       # - 9229:9229
     depends_on:
       - postgres
