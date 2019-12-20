@@ -14,7 +14,6 @@ import { bootstrap } from './bootstrap/index';
 import routeMiddleware from './routes/index';
 import errorMiddleware from './middlewares/error';
 import responseMiddleware from './middlewares/response';
-import { Server } from 'typeorm';
 
 const logger = new Logger('chairlift').createLogger();
 
@@ -46,7 +45,7 @@ bootstrap()
 
     const sockerServer = new AppServer(app);
 
-    const client = new MyClient();
+    //const client = new MyClient();
 
     app.listen(config.server.port, () => {
       console.info('server started on port %d', config.server.port);

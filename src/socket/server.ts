@@ -1,10 +1,9 @@
 import { createServer, Server } from 'http';
 import * as Koa from 'koa';
 import * as socketIo from 'socket.io';
-import { Bus } from '../entities/bus';
 
 export class AppServer {
-    public static readonly PORT: number = 4002;
+    public static readonly PORT: number = 4003;
     private app: Koa;
     private server: Server;
     private io: socketIo.Server;
@@ -32,7 +31,10 @@ export class AppServer {
     }
 
     private sockets(): void {
-        this.io = socketIo(this.server);
+        this.io = socketIo(this.server, {
+            path: '/api/v1/bus'
+        });
+        //this.io.attach(this.server);
     }
 
     private listen(): void {
@@ -41,10 +43,26 @@ export class AppServer {
         });
 
         this.io.on('connect', (socket: any) => {
-            console.log('Connected client on port %s.', this.port);
-            socket.on('bus', (m: Bus) => {
-                console.log('[server](bus): %s', JSON.stringify(m));
-                this.io.emit('bus', m);
+            console.log('\n\nConnected client on port %s.\n\n', this.port);
+            //this.io.path('/api/v1/bus/info').emit('/', 'Message from server.');
+            // socket.on('event', (_m: any) => {
+            //     console.log('\n\nMessage received from app\n\n');//JSON.stringify(m));
+            //     this.io.sockets.emit('event', { content: 'sending message again' });
+            // });
+
+            // socket.on('/', (_m: any) => {
+            //     console.log('\n\nMessage received from app2\n\n');//JSON.stringify(m));
+            //     this.io.sockets.emit('info', { content: 'sending message again2' });
+            // });
+
+            socket.on('event', (_m: any) => {
+                console.log('\n\nMessage received from app3\n\n');//JSON.stringify(m));
+                //this.io.sockets.emit('info', { content: 'sending message again2' });
+            });
+
+            socket.on('event', (_m: any) => {
+                console.log('\n\nMessage received from app2\n\n');//JSON.stringify(m));
+                //this.io.sockets.emit('info', { content: 'sending message again2' });
             });
 
             socket.on('disconnect', () => {
