@@ -71,6 +71,6 @@ export const endRide = async (ctx: Context, next: () => void) => {
 
 export const cancelBooking = async (ctx: Context, next: () => void) => {
     const id: number = ctx.params.id;
-    ctx.state.data = await services.softDelete(id);
+    ctx.state.data = await services.hardDelete(id);
     await next();
 };

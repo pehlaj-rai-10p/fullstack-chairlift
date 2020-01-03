@@ -127,12 +127,16 @@ export const bookRide = async (payload: IBookingRequest) => {
 
 export const softDelete = async (id: number) => {
     const result = await getById(id);
-    await repo.update(id, { isDeleted: true });
-    return { success: true };
+    if (result) {
+        return repo.update(id, { isDeleted: true });
+    }
+    return { success: false };
 };
 
 export const hardDelete = async (id: number) => {
     const result = await getById(id);
-    await repo.hardDelete(id);
-    return { success: true };
+    if (result) {
+        return repo.hardDelete(id);
+    }
+    return { success: false };
 };
