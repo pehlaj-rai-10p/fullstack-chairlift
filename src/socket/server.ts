@@ -59,7 +59,7 @@ export class AppServer {
 
     private sockets(): void {
         this.io = socketIo(this.server, {
-            path: '/api/v1/bus'
+            path: '/api/v1/bus/track'
         });
         //this.io.attach(this.server);
     }
@@ -73,14 +73,12 @@ export class AppServer {
             console.log('\n\nSocket Connected ', socket.port, socket.path);
 
             socket.on('event', (event: any) => {
-                console.log('\n\nEvent received from app: ', event);//JSON.stringify(m));
-                //const random = Math.round(Math.random() * 10);
-                var data = this.randomData[this.index];
-                console.log('\n\nData: ', this.index, data);
-                this.index++;
-                if (this.index >= this.randomData.length) {
-                    this.index = this.randomData.length - 1;
+                console.log('\n\nEvent received from app: ', event);
+                if (event >= this.randomData.length) {
+                    event = this.randomData.length - 1;
                 }
+                var data = this.randomData[event];
+                console.log('\n\nData: ', event, data);
                 socket.emit('data', { data: data, content: 'Server message in event response' });
             });
 
