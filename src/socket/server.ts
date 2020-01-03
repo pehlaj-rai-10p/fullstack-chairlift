@@ -1,7 +1,12 @@
 import { createServer, Server } from 'http';
 import * as Koa from 'koa';
 import * as socketIo from 'socket.io';
-import { Double } from 'typeorm';
+import * as busRepo from '../repositories/bus';
+import * as riderRepo from '../repositories/rider';
+import * as bookingRepo from '../repositories/booking';
+import { Bus, BusStatus } from '../entities/bus';
+import { Booking, RideStatus } from '../entities/booking';
+import { RiderStatus, Rider } from '../entities/rider';
 
 export class AppServer {
     public static readonly PORT: number = 4003;
@@ -9,6 +14,7 @@ export class AppServer {
     private server: Server;
     private io: socketIo.Server;
     private port: string | number;
+    private connections: Map<string, any>;
 
     private index = 0;
 
@@ -72,14 +78,44 @@ export class AppServer {
         this.io.on('connect', (socket: any) => {
             console.log('\n\nSocket Connected ', socket.port, socket.path);
 
-            socket.on('event', (event: any) => {
-                console.log('\n\nEvent received from app: ', event);
-                if (event >= this.randomData.length) {
-                    event = this.randomData.length - 1;
+            socket.on('event', (busId: number, bookingId: number) => {
+                //this.connections.set(event)
+                console.log('\n\nEvent received from app: ', busId, bookingId);
+
+                if (busId > 0) {
+
+                    var index = 0;
+                    var timer = setTimeout(async function myTimer() {
+
+                        const bus = await busRepo.getById(busId) as Bus;
+                        var data = bus.route[index];
+                        console.log('\n\nData: ', index, data);
+                        socket.emit('data', { data: data, content: 'Server message in event response' });
+                        index++;
+                        if (bus.route && index >= bus.route.length) {
+                            const booking = await bookingRepo.getById(bookingId) as Booking;
+                            const rider = await riderRepo.getById(booking.riderId) as Rider;
+                            rider.status = RiderStatus.Idle;
+                            booking.status = RideStatus.Complete;
+                            bus.status = BusStatus.Idle;
+                            bus.availableSeats = bus.capacity;
+                            await busRepo.update(busId, bus);
+                            await riderRepo.update(booking.riderId, rider);
+                            await bookingRepo.update(bookingId, booking);
+                            socket.emit('event', -1);
+                        }
+
+                        timer = setTimeout(myTimer, 2000);
+                    }, 5000);
                 }
-                var data = this.randomData[event];
-                console.log('\n\nData: ', event, data);
-                socket.emit('data', { data: data, content: 'Server message in event response' });
+
+                // let's cancel after 7 seconds
+                setTimeout(() => {
+                    console.log('Cancelling');
+                    clearTimeout(timer);
+                }, 160000);
+
+
             });
 
             socket.on('disconnect', () => {
