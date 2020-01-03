@@ -10,7 +10,31 @@ export class AppServer {
     private io: socketIo.Server;
     private port: string | number;
 
-    private randomData = [{ latitude: 52.5162041, longitude: 13.378365 }, { latitude: 52.5162041, longitude: 13.378365 }, { latitude: 52.5162041, longitude: 13.378365 }, { latitude: 52.5159999, longitude: 13.3778999 }, { latitude: 52.5206638, longitude: 13.3861149 }, { latitude: 52.5205999, longitude: 13.3861999 }, { latitude: 52.5162792, longitude: 13.3795345 }, { latitude: 52.5163651, longitude: 13.3808541 }, { latitude: 52.5180817, longitude: 13.3804464 }, { latitude: 52.5189292, longitude: 13.3802962 }];
+    private index = 0;
+
+    private randomData = [
+        { longitude: 67.0354019, latitude: 24.8500037 },
+        { longitude: 67.0707169, latitude: 24.862804 },
+        { longitude: 67.069437, latitude: 24.861947 },
+        { longitude: 67.067028, latitude: 24.861228 },
+        { longitude: 67.063782, latitude: 24.860418 },
+        { longitude: 67.058526, latitude: 24.859602 },
+        { longitude: 67.052106, latitude: 24.859084 },
+        { longitude: 67.050955, latitude: 24.857123 },
+        { longitude: 67.055359, latitude: 24.846300 },
+        { longitude: 67.060364, latitude: 24.840791 },
+        { longitude: 67.067894, latitude: 24.836993 },
+        { longitude: 67.073757, latitude: 24.833334 },
+        { longitude: 67.076393, latitude: 24.813005 },
+        { longitude: 67.076616, latitude: 24.800775 },
+        { longitude: 67.079496, latitude: 24.793210 },
+        { longitude: 67.083187, latitude: 24.790105 },
+        { longitude: 67.089577, latitude: 24.786206 },
+        { longitude: 67.091864, latitude: 24.782198 },
+        { longitude: 67.091440, latitude: 24.781760 },
+        { longitude: 67.090422, latitude: 24.780690 },
+        { longitude: 67.089635, latitude: 24.779874 }
+    ];
 
     constructor(app: Koa) {
         this.app = app;
@@ -48,49 +72,20 @@ export class AppServer {
         this.io.on('connect', (socket: any) => {
             console.log('\n\nSocket Connected ', socket.port, socket.path);
 
-            // socket.on('open', function () {
-
-            //     socket.on('event', (event: any) => {
-            //         console.log('\n\nEvent received from app is ', event);//JSON.stringify(m));
-            //         socket.emit('event', { content: 'Event response from server.' });
-            //         //this.io.sockets.emit('event', { content: 'Event response from server.' });
-            //     });
-
-            //     //socket.emit('event', { content: 'Event on socket open' });
-            //     //socket.emit('message', { content: 'Message on socket open' });
-            //     socket.on('message', (mesage: any) => {
-
-            //         socket.emit('message', { content: 'Message response from server' });
-            //         console.log('\n\Message received on socket from app is ', mesage);//JSON.stringify(m));
-            //     });
-            //     socket.on('close', function () {
-            //         console.log('\n\Socket close from app3\n\n');//JSON.stringify(m));
-            //     });
-            // });
-
-            socket.on('message', (mesage: any) => {
-                console.log('\n\nMessage received from app: ', mesage);//JSON.stringify(m));
-                socket.emit('message', { content: 'Message response from server' });
-                //this.io.sockets.emit('message', { content: 'Message response from server' });
-            });
-
             socket.on('event', (event: any) => {
                 console.log('\n\nEvent received from app: ', event);//JSON.stringify(m));
-                const random = Math.round(Math.random() * 10);
-                var data = this.randomData[random];
-                console.log('\n\nData: ', random, data);
+                //const random = Math.round(Math.random() * 10);
+                var data = this.randomData[this.index];
+                console.log('\n\nData: ', this.index, data);
+                this.index++;
+                if (this.index >= this.randomData.length) {
+                    this.index = this.randomData.length - 1;
+                }
                 socket.emit('data', { data: data, content: 'Server message in event response' });
-                //this.io.sockets.emit('event', { content: 'Server message in event response' });
             });
 
             socket.on('disconnect', () => {
                 console.log('Client disconnected');
-            });
-
-            socket.on('transport', (transport: any) => {
-                console.log('\n\nIO Transport from app: ', transport);//JSON.stringify(m));
-                socket.emit('event', { content: 'Transport response from server' });
-                //this.io.sockets.emit('event', { content: 'sending event - transport' });
             });
         });
     }
