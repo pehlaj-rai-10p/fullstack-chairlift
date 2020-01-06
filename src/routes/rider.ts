@@ -11,6 +11,8 @@ router.get('/', ctrl.getAll);
 
 router.get('/:id', ctrl.getById);
 
+router.post('/info', ctrl.getByUserName);
+
 router.post('/', ctrl.registerRider);
 
 router.put('/:id', ctrl.updateRiderProfile);

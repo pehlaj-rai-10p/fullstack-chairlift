@@ -7,6 +7,10 @@ export interface IRiderRequest {
     emailAddress: string;
 }
 
+export interface IRiderLoginRequest {
+    userName: string;
+}
+
 export interface IRiderProfileRequest {
     firstName: string;
     lastName: string;

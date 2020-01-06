@@ -1,9 +1,20 @@
-import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Booking } from './booking';
+import { Location } from './location';
+
+export enum BusStatus {
+  Idle = 'Idle',
+  Booking = 'Booking',
+  OnRoute = 'OnRoute'
+}
 
 @Entity('bus')
 export class Bus {
   @PrimaryGeneratedColumn()
   public id: number;
+
+  //@OneToMany(_type => Booking, booking => booking.bus)
+  public bookings: Booking[];
 
   @Column({
     type: 'character varying',
@@ -16,7 +27,7 @@ export class Bus {
     length: '100'
   })
   public make: string;
-  
+
   @Column({
     type: 'character varying',
     length: '100'
@@ -48,15 +59,11 @@ export class Bus {
   })
   public currentLocation: string;
 
-  @Column("simple-json")
-  public route: { lat: number, lng: number };
+  @Column("jsonb")
+  public route: Location[];
 
-  @Column({
-    type: 'enum',
-    enum: ["Idle", "Booking", "OnRoute"],
-    default: "Idle"
-  })
-  public status: string;
+  @Column('text')
+  public status: BusStatus;
 
   @Column({
     type: 'integer',

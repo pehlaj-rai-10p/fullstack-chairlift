@@ -6,7 +6,7 @@ export interface IBusRequest {
     chasisNumber: string;
     driverName: string;
     capacity: number;
-    route: string;
+    route: JSON;
 }
 
 export interface IBusUpdateRequest {

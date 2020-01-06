@@ -1,6 +1,7 @@
 import * as convict from 'convict';
 
 export interface IConfig {
+  jwtSecret: string;
   env: string;
   server: {
     port: number;
@@ -23,6 +24,8 @@ export interface IConfig {
 }
 
 const config = convict<IConfig>({
+
+  jwtSecret: "TesT@Secret",
   env: {
     format: ['local', 'production', 'development'],
     env: 'NODE_ENV',
@@ -33,7 +36,7 @@ const config = convict<IConfig>({
     port: {
       format: 'port',
       env: 'NODE_PORT',
-      default: 4001,
+      default: 4003,
     },
   },
   api: {

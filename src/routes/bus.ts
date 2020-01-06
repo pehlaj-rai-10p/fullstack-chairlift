@@ -13,8 +13,6 @@ router.get('/:id', ctrl.getById);
 
 router.post('/', ctrl.registerBus);
 
-router.put('/:id', ctrl.updateBusDetails);
-
 router.delete('/:id', ctrl.deleteBus);
 
 const routes = router.routes();

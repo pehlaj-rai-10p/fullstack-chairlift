@@ -21,21 +21,9 @@ export const registerBus = async (ctx: Context, next: () => void) => {
         chasisNumber: '',
         driverName: '',
         capacity: 0,
-        route: '',
+        route: JSON.parse("{}"),
     };
     ctx.state.data = await services.registerBus(bus);
-    await next();
-};
-
-export const updateBusDetails = async (ctx: Context, next: () => void) => {
-    const id: number = ctx.params.id;
-    const bus = {
-        id: 0,
-        driverName: '',
-        location: '',
-        status: '',
-    };
-    ctx.state.data = await services.updateBusDetails(id, bus);
     await next();
 };
 

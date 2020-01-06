@@ -1,9 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
+import { Booking } from './booking';
+
+export enum RiderStatus {
+  Idle = 'Idle',
+  RideBooked = 'RideBooked',
+  InRide = 'InRide'
+}
 
 @Entity('rider')
 export class Rider {
   @PrimaryGeneratedColumn()
   public id: number;
+
+  //@OneToMany(_type => Booking, booking => booking.rider)
+  //public bookings: Booking[];
 
   @Column({
     type: 'character varying',
@@ -16,7 +26,7 @@ export class Rider {
     length: '100'
   })
   public passwordHash: string;
-  
+
   @Column({
     type: 'character varying',
     length: '100'
@@ -42,11 +52,19 @@ export class Rider {
   public emailAddress: string;
 
   @Column({
-    type: 'enum',
-    enum: ["Idle", "RideBooked", "InRide"],
-    default: "Idle"
+    type: 'character varying',
+    length: '255'
   })
-  public status: string;
+  public profilePicUrl: string;
+
+  // @Column({
+  //   type: 'character varying',
+  //   length: '100'
+  // })
+  // public status: string;
+
+  @Column('text')
+  public status: RiderStatus;
 
   @Column({
     type: 'integer',
@@ -72,4 +90,10 @@ export class Rider {
     default: false,
   })
   public isDeleted: boolean;
+
+  public decreaseFreeRidesCount(): number {
+
+    this.numFreeRides = this.numFreeRides > 0 ? this.numFreeRides - 1 : 0;
+    return this.numFreeRides;
+  }
 }

@@ -9,12 +9,12 @@ export const getById = async (id: number) => {
     return getRepository(Bus).findOne({ id });
 }
 
-export const insert = async (rider: Bus) => {
-    return getRepository(Bus).insert(rider);
+export const insert = async (bus: Bus) => {
+    return getRepository(Bus).insert(bus);
 }
 
-export const update = async (id: number, riders: Partial<Bus>) => {
-    return getRepository(Bus).update({ id }, riders);
+export const update = async (id: number, bus: Partial<Bus>) => {
+    return getRepository(Bus).update({ id }, bus);
 }
 
 export const hardDelete = async (id: number) => {

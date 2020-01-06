@@ -1,7 +1,9 @@
 import * as boom from 'boom';
 import * as joi from 'joi';
+import * as jwt from 'jsonwebtoken';
 import * as riderRepo from '../repositories/rider';
 import { Rider } from '../entities/rider';
+import config from "../../config";
 import { IRiderRequest, IRiderProfileRequest } from '../interfaces/rider';
 
 export const getAll = async () => {
@@ -16,12 +18,32 @@ export const getById = async (id: number) => {
     return result;
 };
 
+export const getByUserName = async (userName: string) => {
+    const result = await riderRepo.getByUserName(userName);
+    if (!result) {
+        boom.badRequest('Invalid id');
+    }
+    return result;
+};
+
 export const registerRider = async (payload: IRiderRequest) => {
     await joi.validate(payload, {
-        name: joi.string().required()
+        userName: joi.string().required(),
+        password: joi.string().required(),
+        firstName: joi.string().required(),
+        lastName: joi.string().required(),
+        mobileNumber: joi.string().required(),
+        emailAddress: joi.string().required(),
     });
     const rider = new Rider();
-    //TODO populate fields here
+    rider.firstName = payload.firstName;
+    rider.lastName = payload.lastName;
+    rider.emailAddress = payload.emailAddress;
+    rider.mobileNumber = payload.mobileNumber;
+
+    rider.userName = payload.userName;
+    rider.passwordHash = jwt.sign(payload.password, config.jwtSecret);
+
     const result = await riderRepo.insert(rider);
     return result[0];
 };
