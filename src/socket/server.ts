@@ -14,7 +14,7 @@ export class AppServer {
     private server: Server;
     private io: socketIo.Server;
     private port: string | number;
-    private connections: Map<string, any>;
+    private connections: Map<number, any>;
 
     private index = 0;
 
@@ -79,7 +79,7 @@ export class AppServer {
             console.log('\n\nSocket Connected ', socket.port, socket.path);
 
             socket.on('event', (busId: number, bookingId: number) => {
-                //this.connections.set(event)
+                this.connections.set(bookingId, socket);
                 console.log('\n\nEvent received from app: ', busId, bookingId);
 
                 if (busId > 0) {
@@ -102,7 +102,7 @@ export class AppServer {
                             await busRepo.update(busId, bus);
                             await riderRepo.update(booking.riderId, rider);
                             await bookingRepo.update(bookingId, booking);
-                            socket.emit('event', -1);
+                            socket.emit('event', -1); // Cancel booking on Ride End
                         }
 
                         timer = setTimeout(myTimer, 2000);
