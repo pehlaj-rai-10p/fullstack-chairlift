@@ -1,5 +1,4 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
-import { UniqueMetadata } from "typeorm/metadata/UniqueMetadata";
 
 export class ChairLift1576579945386 implements MigrationInterface {
 
