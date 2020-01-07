@@ -4,13 +4,15 @@ import { IBookingRequest, IBookingUpdateRequest } from '../interfaces';
 import { RideStatus } from '../entities';
 import { string } from 'joi';
 
-export const getAll = async (ctx: Context, next: () => void) => {
+export const getAllByRdier = async (ctx: Context, next: () => void) => {
     const status = ctx.query.status;
     const riderId = ctx.query.riderId;
     if (status && (status as string).length > 0 && riderId) {
         ctx.state.data = await services.filteredBooking(riderId, status);
+    } else if (riderId > 0) {
+        ctx.state.data = await services.getAllByRider(riderId);
     } else {
-        ctx.state.data = await services.getAll(riderId);
+        ctx.state.data = await services.getAll();
     }
     await next();
 };

@@ -6,8 +6,12 @@ import * as riderRepo from '../repositories/rider';
 import { Bus, BusStatus, Rider, RiderStatus, Booking, RideStatus } from '../entities';
 import { IBookingRequest } from '../interfaces';
 
-export const getAll = async (riderId: Number) => {
-    return repo.getAll(riderId);
+export const getAll = () => {
+    return repo.getAll();
+};
+
+export const getAllByRider = async (riderId: Number) => {
+    return repo.getAllByRider(riderId);
 };
 
 export const filteredBooking = async (riderId: Number, status: string) => {

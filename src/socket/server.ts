@@ -2,12 +2,8 @@ import { createServer, Server } from 'http';
 import * as Koa from 'koa';
 import * as socketIo from 'socket.io';
 import * as busRepo from '../repositories/bus';
-import * as riderRepo from '../repositories/rider';
-import * as bookingRepo from '../repositories/booking';
-import * as busService from '../services/bus';
-import * as riderService from '../services/rider';
 import * as bookingService from '../services/booking';
-import { Bus, BusStatus, Booking, RideStatus, RiderStatus, Rider } from '../entities';
+import { Bus } from '../entities';
 
 export class AppServer {
     public static readonly PORT: number = 4003;
