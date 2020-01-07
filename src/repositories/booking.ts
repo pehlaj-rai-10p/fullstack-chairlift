@@ -1,9 +1,7 @@
 import { getRepository } from 'typeorm';
-import { Booking } from '../entities/booking';
+import { Bus, Rider, Booking } from '../entities';
 import * as busRepo from './bus';
 import * as riderRepo from './rider';
-import { Rider } from '../entities/rider';
-import { Bus } from '../entities/bus';
 
 export const getAll = async (riderId: Number) => {
     return (await getRepository(Booking).find()).filter((booking: Booking) => booking.riderId == riderId);

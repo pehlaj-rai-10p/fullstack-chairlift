@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { Bus } from '../entities/bus';
+import { Bus } from '../entities';
 
 export const getAll = async () => {
     return getRepository(Bus).find({ isActive: true });

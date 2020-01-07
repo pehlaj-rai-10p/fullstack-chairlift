@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column, Exclusion } from 'typeorm';
 import { Bus } from './bus';
 import { Rider } from './rider';
-import { Location } from '../entities/location';
+import { Location } from '../entities';
 
 export enum RideStatus {
   Idle = "Idle",

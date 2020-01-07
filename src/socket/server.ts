@@ -4,9 +4,7 @@ import * as socketIo from 'socket.io';
 import * as busRepo from '../repositories/bus';
 import * as riderRepo from '../repositories/rider';
 import * as bookingRepo from '../repositories/booking';
-import { Bus, BusStatus } from '../entities/bus';
-import { Booking, RideStatus } from '../entities/booking';
-import { RiderStatus, Rider } from '../entities/rider';
+import { Bus, BusStatus, Booking, RideStatus, RiderStatus, Rider } from '../entities';
 
 export class AppServer {
     public static readonly PORT: number = 4003;

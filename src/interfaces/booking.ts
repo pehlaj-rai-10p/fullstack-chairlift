@@ -1,4 +1,4 @@
-import { Location } from '../entities/location';
+import { Location } from '../entities';
 
 export interface IBookingRequest {
     riderId: number;

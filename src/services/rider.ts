@@ -2,7 +2,7 @@ import * as boom from 'boom';
 import * as joi from 'joi';
 import * as jwt from 'jsonwebtoken';
 import * as riderRepo from '../repositories/rider';
-import { Rider } from '../entities/rider';
+import { Rider } from '../entities';
 import config from "../../config";
 import { IRiderRequest, IRiderProfileRequest } from '../interfaces/rider';
 

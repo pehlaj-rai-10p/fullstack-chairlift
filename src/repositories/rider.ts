@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { Rider } from '../entities/rider';
+import { Rider } from '../entities';
 
 export const getAll = async () => {
     return getRepository(Rider).find({ isActive: true });
