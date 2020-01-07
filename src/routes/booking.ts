@@ -7,7 +7,7 @@ const router = new Router({
   prefix: `${config.api.baseURL}/booking`,
 });
 
-router.get('/', ctrl.getAll);
+router.get('/', ctrl.getAllByRdier);
 
 router.get('/:id', ctrl.bookingDetails);
 

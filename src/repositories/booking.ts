@@ -3,7 +3,11 @@ import { Bus, Rider, Booking } from '../entities';
 import * as busRepo from './bus';
 import * as riderRepo from './rider';
 
-export const getAll = async (riderId: Number) => {
+export const getAll = () => {
+    return getRepository(Booking).find();
+}
+
+export const getAllByRider = async (riderId: Number) => {
     return (await getRepository(Booking).find()).filter((booking: Booking) => booking.riderId == riderId);
 }
 
