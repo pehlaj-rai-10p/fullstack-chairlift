@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 import * as services from '../services/rider';
-import { IRiderLoginRequest } from '../interfaces/rider';
+import { IRiderLoginRequest } from '../interfaces';
 
 export const getAll = async (ctx: Context, next: () => void) => {
     ctx.state.data = await services.getAll();

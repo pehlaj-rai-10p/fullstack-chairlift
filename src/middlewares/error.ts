@@ -3,7 +3,7 @@ import * as Boom from 'boom';
 import * as compose from 'koa-compose';
 import { Context } from 'koa';
 
-import { IMetaData } from '../interfaces/response';
+import { IMetaData } from '../interfaces';
 import config from '../../config';
 
 const isProduction = config.env === 'production';

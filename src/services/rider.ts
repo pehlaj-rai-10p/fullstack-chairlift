@@ -4,7 +4,7 @@ import * as jwt from 'jsonwebtoken';
 import * as riderRepo from '../repositories/rider';
 import { Rider } from '../entities';
 import config from "../../config";
-import { IRiderRequest, IRiderProfileRequest } from '../interfaces/rider';
+import { IRiderRequest, IRiderProfileRequest } from '../interfaces';
 
 export const getAll = async () => {
     return riderRepo.getAll();

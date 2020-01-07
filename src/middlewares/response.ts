@@ -1,7 +1,7 @@
 import * as compose from 'koa-compose';
 import { Context } from 'koa';
 
-import { IResponse } from '../interfaces/response';
+import { IResponse } from '../interfaces';
 
 const handler = async (ctx: Context, next: () => void) => {
   ctx.body = {} as IResponse;

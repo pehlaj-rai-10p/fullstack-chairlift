@@ -1,6 +1,6 @@
 import { Context } from 'koa';
 import * as services from '../services/booking';
-import { IBookingRequest, IBookingUpdateRequest } from '../interfaces/booking';
+import { IBookingRequest, IBookingUpdateRequest } from '../interfaces';
 import { RideStatus } from '../entities';
 import { string } from 'joi';
 

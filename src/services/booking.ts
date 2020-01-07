@@ -4,7 +4,7 @@ import * as repo from '../repositories/booking';
 import * as busRepo from '../repositories/bus';
 import * as riderRepo from '../repositories/rider';
 import { Bus, BusStatus, Rider, RiderStatus, Booking, RideStatus } from '../entities';
-import { IBookingRequest } from '../interfaces/booking';
+import { IBookingRequest } from '../interfaces';
 
 export const getAll = async (riderId: Number) => {
     return repo.getAll(riderId);

@@ -2,7 +2,7 @@ import * as boom from 'boom';
 import * as joi from 'joi';
 import * as repo from '../repositories/bus';
 import { Bus } from '../entities';
-import { IBusRequest, IBusBookingRequest, IBusUpdateRequest } from '../interfaces/bus';
+import { IBusRequest, IBusBookingRequest, IBusUpdateRequest } from '../interfaces';
 
 export const getAll = async () => {
     return repo.getAll();
