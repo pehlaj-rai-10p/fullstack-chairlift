@@ -39,6 +39,7 @@ export class AppServer {
 
     constructor(app: Koa) {
         this.app = app;
+        this.connections = new Map();
         //this.createApp();
         this.config();
         this.createServer();
@@ -74,7 +75,7 @@ export class AppServer {
             console.log('\n\nSocket Connected ', socket.port, socket.path);
 
             socket.on('event', (async function onEvent(busId: number, bookingId: number) {
-                this.connections.set(bookingId, socket);
+                //this.connections.set(bookingId, socket);
                 console.log('\n\nEvent received from app: ', busId, bookingId);
 
                 if (busId > 0 && bookingId > 0) {
