@@ -4,6 +4,9 @@ import * as socketIo from 'socket.io';
 import * as busRepo from '../repositories/bus';
 import * as riderRepo from '../repositories/rider';
 import * as bookingRepo from '../repositories/booking';
+import * as busService from '../services/bus';
+import * as riderService from '../services/rider';
+import * as bookingService from '../services/booking';
 import { Bus, BusStatus, Booking, RideStatus, RiderStatus, Rider } from '../entities';
 
 export class AppServer {
@@ -13,8 +16,6 @@ export class AppServer {
     private io: socketIo.Server;
     private port: string | number;
     private connections: Map<number, any>;
-
-    private index = 0;
 
     private randomData = [
         { longitude: 67.0354019, latitude: 24.8500037 },
@@ -76,13 +77,14 @@ export class AppServer {
         this.io.on('connect', (socket: any) => {
             console.log('\n\nSocket Connected ', socket.port, socket.path);
 
-            socket.on('event', (busId: number, bookingId: number) => {
+            socket.on('event', (async function onEvent(busId: number, bookingId: number) {
                 this.connections.set(bookingId, socket);
                 console.log('\n\nEvent received from app: ', busId, bookingId);
 
-                if (busId > 0) {
+                if (busId > 0 && bookingId > 0) {
 
                     var index = 0;
+                    await bookingService.startRide(bookingId);
                     var timer = setTimeout(async function myTimer() {
 
                         const bus = await busRepo.getById(busId) as Bus;
@@ -91,15 +93,7 @@ export class AppServer {
                         socket.emit('data', { data: data, content: 'Server message in event response' });
                         index++;
                         if (bus.route && index >= bus.route.length) {
-                            const booking = await bookingRepo.getById(bookingId) as Booking;
-                            const rider = await riderRepo.getById(booking.riderId) as Rider;
-                            rider.status = RiderStatus.Idle;
-                            booking.status = RideStatus.Complete;
-                            bus.status = BusStatus.Idle;
-                            bus.availableSeats = bus.capacity;
-                            await busRepo.update(busId, bus);
-                            await riderRepo.update(booking.riderId, rider);
-                            await bookingRepo.update(bookingId, booking);
+                            await bookingService.endRide(bookingId);
                             socket.emit('event', -1); // Cancel booking on Ride End
                         }
 
@@ -114,7 +108,7 @@ export class AppServer {
                 }, 160000);
 
 
-            });
+            }));
 
             socket.on('disconnect', () => {
                 console.log('Client disconnected');
