@@ -19,4 +19,4 @@ https://documenter.getpostman.com/view/8258162/SWECVEik?version=latest
 https://github.com/pehlaj-rai-10p/chairliftandroid
 
 ## APIs Deployed on AWS
-- http://ec2-44-231-55-15.us-west-2.compute.amazonaws.com/
+- http://ec2-44-231-55-15.us-west-2.compute.amazonaws.com:4001/
