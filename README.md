@@ -1,6 +1,6 @@
 # CHAIRLIFT
 
-# Architecture, ERD, State and Architecture Diagrams
+# ERD, State and Architecture Diagrams
 - https://github.com/pehlaj-rai-10p/fullstack-chairlift/tree/master/uml
 
 ## Backend
