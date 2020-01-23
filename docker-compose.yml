@@ -15,6 +15,7 @@ services:
       - './src:/app/src'
       - './doc:/app/doc'
     ports:
+      - 80:80
       - 4001:4001
       - 4002:4002
       - 4003:4003
