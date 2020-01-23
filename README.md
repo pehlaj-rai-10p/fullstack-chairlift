@@ -65,7 +65,7 @@ A collection of useful commands which might be helpful
 
 ```
 NODE_ENV=local
-PORT=4001
+PORT=80
 API_KEY_SENDGRID=XXX
 API_KEY_MAILGUN=XXX
 MAILGUN_DOMAIN=xxx
