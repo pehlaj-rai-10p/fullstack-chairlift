@@ -13,30 +13,6 @@ export class AppServer {
     private port: string | number;
     private connections: Map<number, any>;
 
-    private randomData = [
-        { longitude: 67.0354019, latitude: 24.8500037 },
-        { longitude: 67.0707169, latitude: 24.862804 },
-        { longitude: 67.069437, latitude: 24.861947 },
-        { longitude: 67.067028, latitude: 24.861228 },
-        { longitude: 67.063782, latitude: 24.860418 },
-        { longitude: 67.058526, latitude: 24.859602 },
-        { longitude: 67.052106, latitude: 24.859084 },
-        { longitude: 67.050955, latitude: 24.857123 },
-        { longitude: 67.055359, latitude: 24.846300 },
-        { longitude: 67.060364, latitude: 24.840791 },
-        { longitude: 67.067894, latitude: 24.836993 },
-        { longitude: 67.073757, latitude: 24.833334 },
-        { longitude: 67.076393, latitude: 24.813005 },
-        { longitude: 67.076616, latitude: 24.800775 },
-        { longitude: 67.079496, latitude: 24.793210 },
-        { longitude: 67.083187, latitude: 24.790105 },
-        { longitude: 67.089577, latitude: 24.786206 },
-        { longitude: 67.091864, latitude: 24.782198 },
-        { longitude: 67.091440, latitude: 24.781760 },
-        { longitude: 67.090422, latitude: 24.780690 },
-        { longitude: 67.089635, latitude: 24.779874 }
-    ];
-
     constructor(app: Koa) {
         this.app = app;
         this.connections = new Map();

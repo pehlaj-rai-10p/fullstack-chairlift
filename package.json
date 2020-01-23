@@ -32,7 +32,7 @@
   "keywords": [
     "email"
   ],
-  "author": "",
+  "author": "Pehlaj",
   "license": "ISC",
   "dependencies": {
     "@types/pg": "^7.11.2",

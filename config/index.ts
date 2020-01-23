@@ -1,27 +1,5 @@
 import * as convict from 'convict';
-
-export interface IConfig {
-  jwtSecret: string;
-  env: string;
-  server: {
-    port: number;
-  };
-  api: {
-    baseURL: string;
-  };
-  database: {
-    connectionName: string;
-    databaseType: string;
-    host: string;
-    port: number;
-    username: string;
-    password: string;
-    database: string;
-    cacheDuration: number;
-    maxQueryExecutionTime: number;
-    readReplicationSlaves: string;
-  };
-}
+import { IConfig } from './interfaces/IConfig';
 
 const config = convict<IConfig>({
 
@@ -50,12 +28,12 @@ const config = convict<IConfig>({
     connectionName: {
       format: String,
       env: 'CONN_NAME',
-      default: '',
+      default: 'postgres',
     },
     databaseType: {
       format: String,
       env: 'TYPEORM_CONNECTION',
-      default: '',
+      default: 'postgres',
     },
     host: {
       format: String,
@@ -65,7 +43,7 @@ const config = convict<IConfig>({
     port: {
       format: 'port',
       env: 'TYPEORM_PORT',
-      default: 0,
+      default: 5432,
     },
     username: {
       format: String,
@@ -80,7 +58,7 @@ const config = convict<IConfig>({
     database: {
       format: String,
       env: 'TYPEORM_DATABASE',
-      default: '',
+      default: 'chairlift',
     },
     cacheDuration: {
       format: Number,
