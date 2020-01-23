@@ -12,7 +12,7 @@ const config = convict({
         port: {
             format: 'port',
             env: 'NODE_PORT',
-            default: 4001,
+            default: 80,
         },
     },
     api: {
