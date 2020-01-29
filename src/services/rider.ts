@@ -19,11 +19,14 @@ export const getById = async (id: number) => {
 };
 
 export const getByUserName = async (userName: string) => {
-    const result = await riderRepo.getByUserName(userName);
-    if (!result) {
-        boom.badRequest('Invalid id');
+    try {
+        const result = await riderRepo.getByUserName(userName) as Rider;
+        result.token = jwt.sign(result.emailAddress, config.jwtSecret);
+        return result;
     }
-    return result;
+    catch (error) {
+        return boom.unauthorized(`Invalid Credentials: ${error}`);
+    }
 };
 
 export const registerRider = async (payload: IRiderRequest) => {
