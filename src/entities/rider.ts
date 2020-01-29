@@ -91,6 +91,8 @@ export class Rider {
   })
   public isDeleted: boolean;
 
+  public token: string;
+
   public decreaseFreeRidesCount(): number {
 
     this.numFreeRides = this.numFreeRides > 0 ? this.numFreeRides - 1 : 0;

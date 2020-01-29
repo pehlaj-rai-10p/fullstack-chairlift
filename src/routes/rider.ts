@@ -2,22 +2,23 @@ import * as Router from 'koa-router';
 import * as compose from 'koa-compose';
 import config from '../../config/index';
 import * as ctrl from '../controllers/rider';
+import { jwtAuth } from '../middlewares/jwtauth';
 
 const router = new Router({
   prefix: `${config.api.baseURL}/rider`,
 });
 
-router.get('/', ctrl.getAll);
+router.get('/', jwtAuth, ctrl.getAll);
 
-router.get('/:id', ctrl.getById);
+router.get('/:id', jwtAuth, ctrl.getById);
 
 router.post('/info', ctrl.getByUserName);
 
-router.post('/', ctrl.registerRider);
+router.post('/', jwtAuth, ctrl.registerRider);
 
-router.put('/:id', ctrl.updateRiderProfile);
+router.put('/:id', jwtAuth, ctrl.updateRiderProfile);
 
-router.delete('/:id', ctrl.deleteRider);
+router.delete('/:id', jwtAuth, ctrl.deleteRider);
 
 const routes = router.routes();
 export default compose([routes]);
